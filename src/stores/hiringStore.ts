@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Position, Candidate } from '../types';
+import type { Position, Candidate } from '../types';
 
 interface HiringState {
   positions: Position[];
