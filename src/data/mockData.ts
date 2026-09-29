@@ -478,7 +478,7 @@ export const mockCandidates: Candidate[] = [
   // Additional 40 candidates
   {
     id: 'cand_11',
-    name: 'Ứng Viên 11',
+    name: 'Nguyễn Thị Lan',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.S. Computer Science',
@@ -489,7 +489,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_12',
-    name: 'Ứng Viên 12',
+    name: 'Trần Văn Hùng',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'M.S. Business',
@@ -500,7 +500,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_13',
-    name: 'Ứng Viên 13',
+    name: 'Phạm Thị Thu',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.S. Engineering',
@@ -511,7 +511,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_14',
-    name: 'Ứng Viên 14',
+    name: 'Hoàng Minh Khánh',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.A. Economics',
@@ -522,7 +522,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_15',
-    name: 'Ứng Viên 15',
+    name: 'Dương Văn Linh',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.S. Computer Science',
@@ -533,7 +533,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_16',
-    name: 'Ứng Viên 16',
+    name: 'Lê Thị Hương',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'M.S. Business',
@@ -544,7 +544,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_17',
-    name: 'Ứng Viên 17',
+    name: 'Võ Quang Huy',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.S. Engineering',
@@ -555,7 +555,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_18',
-    name: 'Ứng Viên 18',
+    name: 'Đặng Thị Hạnh',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.A. Economics',
@@ -566,7 +566,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_19',
-    name: 'Ứng Viên 19',
+    name: 'Bùi Văn Anh',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.S. Computer Science',
@@ -577,7 +577,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_20',
-    name: 'Ứng Viên 20',
+    name: 'Phan Thị Huyền',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'M.S. Business',
@@ -588,7 +588,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_21',
-    name: 'Ứng Viên 21',
+    name: 'Vũ Thị Minh',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.S. Engineering',
@@ -599,7 +599,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_22',
-    name: 'Ứng Viên 22',
+    name: 'Đỗ Văn Khoa',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.A. Economics',
@@ -610,7 +610,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_23',
-    name: 'Ứng Viên 23',
+    name: 'Mạc Thị Hà',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.S. Computer Science',
@@ -621,7 +621,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_24',
-    name: 'Ứng Viên 24',
+    name: 'Nguyễn Văn Tuấn',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'M.S. Business',
@@ -632,7 +632,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_25',
-    name: 'Ứng Viên 25',
+    name: 'Trần Thị Liêu',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.S. Engineering',
@@ -643,7 +643,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_26',
-    name: 'Ứng Viên 26',
+    name: 'Phạm Minh Đức',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.A. Economics',
@@ -654,7 +654,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_27',
-    name: 'Ứng Viên 27',
+    name: 'Hoàng Thị Yến',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.S. Computer Science',
@@ -665,7 +665,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_28',
-    name: 'Ứng Viên 28',
+    name: 'Dương Văn Hiệp',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'M.S. Business',
@@ -676,7 +676,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_29',
-    name: 'Ứng Viên 29',
+    name: 'Lê Quang Dũng',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.S. Engineering',
@@ -687,7 +687,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_30',
-    name: 'Ứng Viên 30',
+    name: 'Võ Thị Bích',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.A. Economics',
@@ -698,7 +698,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_31',
-    name: 'Ứng Viên 31',
+    name: 'Đặng Văn Bình',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.S. Computer Science',
@@ -709,7 +709,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_32',
-    name: 'Ứng Viên 32',
+    name: 'Bùi Thị Hà',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'M.S. Business',
@@ -720,7 +720,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_33',
-    name: 'Ứng Viên 33',
+    name: 'Phan Văn Tùng',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.S. Engineering',
@@ -731,7 +731,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_34',
-    name: 'Ứng Viên 34',
+    name: 'Vũ Thị Oanh',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.A. Economics',
@@ -742,7 +742,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_35',
-    name: 'Ứng Viên 35',
+    name: 'Đỗ Thị Cúc',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.S. Computer Science',
@@ -753,7 +753,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_36',
-    name: 'Ứng Viên 36',
+    name: 'Mạc Văn Sơn',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'M.S. Business',
@@ -764,7 +764,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_37',
-    name: 'Ứng Viên 37',
+    name: 'Nguyễn Thị Diễm',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.S. Engineering',
@@ -775,7 +775,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_38',
-    name: 'Ứng Viên 38',
+    name: 'Trần Văn Chiến',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.A. Economics',
@@ -786,7 +786,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_39',
-    name: 'Ứng Viên 39',
+    name: 'Phạm Thị Trang',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.S. Computer Science',
@@ -797,7 +797,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_40',
-    name: 'Ứng Viên 40',
+    name: 'Hoàng Văn Hải',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'M.S. Business',
@@ -808,7 +808,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_41',
-    name: 'Ứng Viên 41',
+    name: 'Dương Thị Hạnh',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.S. Engineering',
@@ -819,7 +819,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_42',
-    name: 'Ứng Viên 42',
+    name: 'Lê Thị Thúy',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.A. Economics',
@@ -830,7 +830,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_43',
-    name: 'Ứng Viên 43',
+    name: 'Võ Văn Dục',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'B.S. Computer Science',
@@ -841,7 +841,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_44',
-    name: 'Ứng Viên 44',
+    name: 'Đặng Thị Thảo',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'M.S. Business',
@@ -852,7 +852,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_45',
-    name: 'Ứng Viên 45',
+    name: 'Bùi Văn Học',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.S. Engineering',
@@ -863,7 +863,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_46',
-    name: 'Ứng Viên 46',
+    name: 'Phan Thị Liên',
     previousCompany: 'Mastercard',
     industry: 'Technology',
     education: 'B.A. Economics',
@@ -874,7 +874,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_47',
-    name: 'Ứng Viên 47',
+    name: 'Vũ Văn Cường',
     previousCompany: 'Paypal',
     industry: 'Finance',
     education: 'B.S. Computer Science',
@@ -885,7 +885,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_48',
-    name: 'Ứng Viên 48',
+    name: 'Đỗ Thị Tuyết',
     previousCompany: 'Stripe',
     industry: 'E-commerce',
     education: 'M.S. Business',
@@ -896,7 +896,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_49',
-    name: 'Ứng Viên 49',
+    name: 'Mạc Thị Linh',
     previousCompany: 'Netflix',
     industry: 'Media',
     education: 'B.S. Engineering',
@@ -907,7 +907,7 @@ export const mockCandidates: Candidate[] = [
   },
   {
     id: 'cand_50',
-    name: 'Ứng Viên 50',
+    name: 'Nguyễn Văn Lâm',
     previousCompany: 'Airbnb',
     industry: 'Logistics',
     education: 'B.A. Economics',
@@ -958,12 +958,21 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
   },
 };
 
-// Helper function to get hiring summary by date range
+/**
+ * Retrieves hiring summary for a date range and optional team filter.
+ * @param startDate - Start date (ISO format: YYYY-MM-DD)
+ * @param _endDate - End date (ISO format: YYYY-MM-DD) - currently unused in MVP
+ * @param team - Optional team filter (defaults to all teams if omitted)
+ * @returns HiringSummary with filtered metrics
+ */
 export const getHiringSummaryByDateRange = (startDate: string, _endDate: string, team?: string): HiringSummary => {
-  const baseKey = startDate.includes('08') ? 'aug_all' : 'sep_all';
+  const startMonth = new Date(startDate).getMonth() + 1;
+  const baseKey = startMonth === 8 ? 'aug_all' : 'sep_all';
   const summary = mockHiringSummaries[baseKey];
 
   if (team && team !== 'All Teams') {
+    // Filter by team: divide metrics equally across 5 teams for MVP
+    // (In production, would aggregate actual team-specific data)
     return {
       ...summary,
       team,
