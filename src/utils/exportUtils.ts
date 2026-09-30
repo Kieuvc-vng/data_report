@@ -9,8 +9,6 @@ import { formatDate, formatNumber } from './formatUtils';
 import {
   transformPipelineData,
   transformRejectReasonsData,
-  transformLevelDistributionData,
-  transformByTeamData,
 } from './dataTransformUtils';
 
 /**
@@ -98,8 +96,11 @@ export const generateHiringSummaryCSV = (data: HiringSummary): string => {
   rows.push(['Metric', 'Value']);
   rows.push(['Total Hired', data.totalHired.toString()]);
   rows.push(['HC Total', data.hcTotal.toString()]);
-  rows.push(['Salary Range', data.salaryRange]);
+  rows.push(['Offer Salary', data.salaryRange]);
   rows.push(['CVs Received', data.pipeline.cv.toString()]);
+  rows.push(['Time to Fill', `${data.timeToFill} days`]);
+  rows.push(['Offer Acceptance Rate', `${data.offerAcceptanceRate}%`]);
+  rows.push(['Onboarded Count', data.onboardedCount.toString()]);
   rows.push([]);
 
   // Pipeline Section
@@ -120,28 +121,14 @@ export const generateHiringSummaryCSV = (data: HiringSummary): string => {
   });
   rows.push([]);
 
-  // Level Distribution Section
-  rows.push(['LEVEL DISTRIBUTION']);
-  rows.push(['Level', 'Count', 'Percentage']);
-  const levelData = transformLevelDistributionData(data);
-  levelData.forEach(level => {
-    rows.push([level.name, level.value.toString(), `${level.percentage}%`]);
-  });
-  rows.push([]);
-
-  // By Team Section
-  rows.push(['HIRES BY TEAM']);
-  rows.push(['Team', 'Count', 'Percentage']);
-  const teamData = transformByTeamData(data);
-  teamData.forEach(team => {
-    rows.push([team.name, team.value.toString(), `${team.percentage}%`]);
-  });
-  rows.push([]);
-
-  // AI Insight Section
-  if (data.aiInsight) {
-    rows.push(['AI INSIGHTS']);
-    rows.push([data.aiInsight]);
+  // Rejection Reasons Summary
+  if (data.rejectReasons.allReasons) {
+    rows.push(['REJECTION REASONS SUMMARY']);
+    rows.push(['Reason', 'Count']);
+    Object.entries(data.rejectReasons.allReasons).forEach(([reason, count]) => {
+      rows.push([reason, count.toString()]);
+    });
+    rows.push([]);
   }
 
   // Convert to CSV using Papa Parse
@@ -157,8 +144,6 @@ export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
   const dateRangeStr = `${formatDate(summary.dateRange.start)} - ${formatDate(summary.dateRange.end)}`;
   const pipelineData = transformPipelineData(summary);
   const rejectData = transformRejectReasonsData(summary);
-  const levelData = transformLevelDistributionData(summary);
-  const teamData = transformByTeamData(summary);
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -336,16 +321,26 @@ export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
               <div class="metric-value">${summary.totalHired}</div>
             </div>
             <div class="metric-card purple">
-              <div class="metric-label">HC Total</div>
-              <div class="metric-value">${summary.hcTotal}</div>
-            </div>
-            <div class="metric-card green">
               <div class="metric-label">CVs Received</div>
               <div class="metric-value">${formatNumber(summary.pipeline.cv)}</div>
             </div>
-            <div class="metric-card amber">
-              <div class="metric-label">Salary Range</div>
+            <div class="metric-card green">
+              <div class="metric-label">Offer Salary</div>
               <div class="metric-value">${summary.salaryRange}</div>
+            </div>
+            <div class="metric-card amber">
+              <div class="metric-label">Time to Fill</div>
+              <div class="metric-value">${summary.timeToFill} days</div>
+            </div>
+          </div>
+          <div class="metrics-grid" style="margin-top: 16px;">
+            <div class="metric-card blue">
+              <div class="metric-label">Offer Acceptance</div>
+              <div class="metric-value">${summary.offerAcceptanceRate}%</div>
+            </div>
+            <div class="metric-card purple">
+              <div class="metric-label">Onboarded Count</div>
+              <div class="metric-value">${summary.onboardedCount}</div>
             </div>
           </div>
         </section>
@@ -394,56 +389,6 @@ export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
           </table>
         </section>
 
-        <section>
-          <h2>Level Distribution</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Level</th>
-                <th class="number">Count</th>
-                <th class="number">Percentage</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${levelData.map(level => `
-                <tr>
-                  <td>${escapeHtml(level.name)}</td>
-                  <td class="number">${formatNumber(level.value)}</td>
-                  <td class="number">${level.percentage}%</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </section>
-
-        <section>
-          <h2>Hires by Team</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Team</th>
-                <th class="number">Count</th>
-                <th class="number">Percentage</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${teamData.map(team => `
-                <tr>
-                  <td>${escapeHtml(team.name)}</td>
-                  <td class="number">${formatNumber(team.value)}</td>
-                  <td class="number">${team.percentage}%</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </section>
-
-        ${summary.aiInsight ? `
-          <section>
-            <h2>AI Insights</h2>
-            <div class="ai-insight">${escapeHtml(summary.aiInsight)}</div>
-          </section>
-        ` : ''}
       </div>
     </body>
     </html>

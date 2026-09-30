@@ -8,5 +8,6 @@ export { PositionRow } from './PositionRow';
 export { PositionAccordion } from './PositionAccordion';
 export { CurrentOpeningsTab } from './CurrentOpeningsTab';
 export { HistoricalTabQueryForm } from './HistoricalTabQueryForm';
-export { ResultsModal } from './ResultsModal';
 export { HistoricalAnalyticsPage } from './HistoricalAnalyticsPage';
+export { FilterDropdown } from './FilterDropdown';
+export { FilterBar } from './FilterBar';

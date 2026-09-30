@@ -13,9 +13,17 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 8, lowExp: 2, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 5, insufficientExp: 2, other: 1 },
+        firstInterview: { skillsMismatch: 3, compensationMismatch: 1 },
+        secondInterview: { location: 1 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-15',
     estimatedFillDays: 20,
+    onboardedCount: 1,
   },
   {
     id: 'pos_2',
@@ -27,9 +35,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 15, firstInterview: 5, secondInterview: 2, offers: 0 },
-    rejectReasons: { notFitSkills: 5, lowExp: 3, salaryMismatch: 2, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 3, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-20',
     estimatedFillDays: 18,
+    onboardedCount: 0,
   },
   {
     id: 'pos_3',
@@ -41,9 +56,17 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 25, firstInterview: 10, secondInterview: 3, offers: 1 },
-    rejectReasons: { notFitSkills: 10, lowExp: 3, salaryMismatch: 2, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 6, insufficientExp: 3, compensationMismatch: 1 },
+        firstInterview: { skillsMismatch: 4, language: 1, other: 1 },
+        secondInterview: { location: 1 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-10',
     estimatedFillDays: 22,
+    onboardedCount: 1,
   },
   {
     id: 'pos_4',
@@ -55,9 +78,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 12, firstInterview: 4, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 6, lowExp: 1, salaryMismatch: 2, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 4, insufficientExp: 1, other: 1 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-09-01',
     estimatedFillDays: 15,
+    onboardedCount: 0,
   },
   {
     id: 'pos_5',
@@ -69,9 +99,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 18, firstInterview: 7, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 7, lowExp: 2, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 4, insufficientExp: 2, other: 1 },
+        firstInterview: { skillsMismatch: 3, language: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-25',
     estimatedFillDays: 16,
+    onboardedCount: 1,
   },
   {
     id: 'pos_6',
@@ -83,9 +120,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'filled',
     pipeline: { cv: 8, firstInterview: 3, secondInterview: 1, offers: 1 },
-    rejectReasons: { notFitSkills: 3, lowExp: 1, salaryMismatch: 1, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 0,
+    },
     createdDate: '2026-07-01',
     estimatedFillDays: 12,
+    onboardedCount: 1,
   },
   {
     id: 'pos_7',
@@ -97,9 +141,16 @@ export const mockPositions: Position[] = [
     priority: 'P3',
     status: 'open',
     pipeline: { cv: 6, firstInterview: 2, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 2, lowExp: 1, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 1, insufficientExp: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-09-05',
     estimatedFillDays: 25,
+    onboardedCount: 0,
   },
   {
     id: 'pos_8',
@@ -111,9 +162,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 30, firstInterview: 12, secondInterview: 4, offers: 2 },
-    rejectReasons: { notFitSkills: 12, lowExp: 5, salaryMismatch: 0, other: 2 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 8, insufficientExp: 5 },
+        firstInterview: { skillsMismatch: 4, other: 2 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-30',
     estimatedFillDays: 14,
+    onboardedCount: 2,
   },
 
   // GDS - Data Solutions (5 positions)
@@ -127,9 +185,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 14, firstInterview: 6, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 6, lowExp: 2, salaryMismatch: 1, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 4, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-18',
     estimatedFillDays: 19,
+    onboardedCount: 1,
   },
   {
     id: 'pos_10',
@@ -141,9 +206,17 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 22, firstInterview: 9, secondInterview: 3, offers: 1 },
-    rejectReasons: { notFitSkills: 9, lowExp: 3, salaryMismatch: 1, other: 2 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 6, insufficientExp: 3 },
+        firstInterview: { skillsMismatch: 3, language: 1, compensationMismatch: 1 },
+        secondInterview: { location: 1 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-22',
     estimatedFillDays: 17,
+    onboardedCount: 1,
   },
   {
     id: 'pos_11',
@@ -155,9 +228,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 10, firstInterview: 4, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 4, lowExp: 1, salaryMismatch: 2, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 1, other: 1 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+      },
+      candidateWithdrawn: 0,
+    },
     createdDate: '2026-09-02',
     estimatedFillDays: 23,
+    onboardedCount: 0,
   },
   {
     id: 'pos_12',
@@ -169,9 +249,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 7, firstInterview: 3, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 3, lowExp: 1, salaryMismatch: 2, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 2 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-28',
     estimatedFillDays: 20,
+    onboardedCount: 0,
   },
   {
     id: 'pos_13',
@@ -183,9 +270,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 16, firstInterview: 6, secondInterview: 2, offers: 0 },
-    rejectReasons: { notFitSkills: 6, lowExp: 2, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 4, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-09-03',
     estimatedFillDays: 18,
+    onboardedCount: 0,
   },
 
   // GIO - Growth & Integration (4 positions)
@@ -199,9 +293,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 13, firstInterview: 5, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 5, lowExp: 2, salaryMismatch: 1, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 3, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-20',
     estimatedFillDays: 16,
+    onboardedCount: 1,
   },
   {
     id: 'pos_15',
@@ -213,9 +314,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 11, firstInterview: 4, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 4, lowExp: 2, salaryMismatch: 0, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, other: 1 },
+      },
+      candidateWithdrawn: 0,
+    },
     createdDate: '2026-08-25',
     estimatedFillDays: 18,
+    onboardedCount: 0,
   },
   {
     id: 'pos_16',
@@ -227,9 +335,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 9, firstInterview: 3, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 3, lowExp: 1, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-09-01',
     estimatedFillDays: 21,
+    onboardedCount: 0,
   },
   {
     id: 'pos_17',
@@ -241,9 +356,16 @@ export const mockPositions: Position[] = [
     priority: 'P3',
     status: 'open',
     pipeline: { cv: 17, firstInterview: 7, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 7, lowExp: 2, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 5, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, language: 1, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-28',
     estimatedFillDays: 14,
+    onboardedCount: 1,
   },
 
   // PRO - Product (4 positions)
@@ -257,9 +379,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'filled',
     pipeline: { cv: 6, firstInterview: 2, secondInterview: 1, offers: 1 },
-    rejectReasons: { notFitSkills: 2, lowExp: 0, salaryMismatch: 2, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 1, compensationMismatch: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 0,
+    },
     createdDate: '2026-06-15',
     estimatedFillDays: 18,
+    onboardedCount: 1,
   },
   {
     id: 'pos_19',
@@ -271,9 +400,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 12, firstInterview: 5, secondInterview: 2, offers: 0 },
-    rejectReasons: { notFitSkills: 5, lowExp: 2, salaryMismatch: 2, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 3, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 2, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-19',
     estimatedFillDays: 19,
+    onboardedCount: 0,
   },
   {
     id: 'pos_20',
@@ -285,9 +421,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 18, firstInterview: 8, secondInterview: 3, offers: 1 },
-    rejectReasons: { notFitSkills: 8, lowExp: 2, salaryMismatch: 1, other: 2 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 5, insufficientExp: 2, other: 1 },
+        firstInterview: { skillsMismatch: 3, language: 1, other: 1 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-24',
     estimatedFillDays: 15,
+    onboardedCount: 1,
   },
   {
     id: 'pos_21',
@@ -299,9 +442,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 14, firstInterview: 6, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 6, lowExp: 2, salaryMismatch: 0, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 4, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-29',
     estimatedFillDays: 13,
+    onboardedCount: 1,
   },
 
   // PIN - Other (4 positions)
@@ -315,9 +465,16 @@ export const mockPositions: Position[] = [
     priority: 'P1',
     status: 'open',
     pipeline: { cv: 10, firstInterview: 4, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 4, lowExp: 2, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-26',
     estimatedFillDays: 17,
+    onboardedCount: 0,
   },
   {
     id: 'pos_23',
@@ -329,9 +486,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 8, firstInterview: 3, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 3, lowExp: 1, salaryMismatch: 2, other: 0 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 2, insufficientExp: 1, compensationMismatch: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+      },
+      candidateWithdrawn: 0,
+    },
     createdDate: '2026-09-04',
     estimatedFillDays: 20,
+    onboardedCount: 0,
   },
   {
     id: 'pos_24',
@@ -343,9 +507,16 @@ export const mockPositions: Position[] = [
     priority: 'P3',
     status: 'open',
     pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
-    rejectReasons: { notFitSkills: 8, lowExp: 3, salaryMismatch: 1, other: 2 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 5, insufficientExp: 3 },
+        firstInterview: { skillsMismatch: 3, compensationMismatch: 1, other: 2 },
+      },
+      candidateWithdrawn: 2,
+    },
     createdDate: '2026-08-21',
     estimatedFillDays: 12,
+    onboardedCount: 1,
   },
   {
     id: 'pos_25',
@@ -357,9 +528,16 @@ export const mockPositions: Position[] = [
     priority: 'P2',
     status: 'open',
     pipeline: { cv: 12, firstInterview: 5, secondInterview: 1, offers: 0 },
-    rejectReasons: { notFitSkills: 5, lowExp: 1, salaryMismatch: 1, other: 1 },
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 3, insufficientExp: 1, compensationMismatch: 1 },
+        firstInterview: { skillsMismatch: 2, other: 1 },
+      },
+      candidateWithdrawn: 1,
+    },
     createdDate: '2026-08-27',
     estimatedFillDays: 14,
+    onboardedCount: 0,
   },
 ];
 
@@ -926,17 +1104,53 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
     salaryRange: '$45K-$120K',
     hcTotal: 32,
     pipeline: { cv: 180, firstInterview: 70, secondInterview: 25, offers: 20 },
-    rejectReasons: { notFitSkills: 70, lowExp: 20, salaryMismatch: 15, other: 10 },
-    levelDistribution: {
-      '1.1': 8,
-      '1.2': 12,
-      '1.3': 10,
-      '2.1': 6,
-      '2.2': 2,
-      '2.3': 1,
+    timeToFill: 17,
+    offerAcceptanceRate: 60,
+    offersCount: 20,
+    onboardedCount: 12,
+    rejectReasons: {
+      byStage: {
+        cv: {
+          skillsMismatch: 20,
+          insufficientExp: 10,
+          overqualified: 3,
+          language: 2,
+        },
+        firstInterview: {
+          skillsMismatch: 10,
+          compensationMismatch: 7,
+          location: 3,
+          other: 2,
+        },
+        secondInterview: {
+          compensationMismatch: 5,
+          background: 2,
+          positionClosed: 3,
+          notProgressedInTime: 4,
+        },
+        offer: {
+          candidateDeclined: 5,
+          compSalary: 2,
+          cultureFit: 1,
+          careerPath: 1,
+          personalReason: 1,
+          companyWithdrew: 3,
+        },
+      },
+      allReasons: {
+        skillsMismatch: 35,
+        insufficientExp: 15,
+        overqualified: 8,
+        compensationMismatch: 12,
+        location: 5,
+        language: 3,
+        background: 2,
+        positionClosed: 3,
+        notProgressedInTime: 4,
+        other: 8,
+      },
+      candidateWithdrawn: 25,
     },
-    byTeam: { PEN: 5, GDS: 3, GIO: 2, PRO: 1, PIN: 1 },
-    aiInsight: 'August hiring was strong with focus on engineering roles. PEN team led with 5 hires. Average time-to-fill was 17 days.',
   },
   'sep_all': {
     dateRange: { start: '2026-09-01', end: '2026-09-30' },
@@ -944,17 +1158,53 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
     salaryRange: '$48K-$125K',
     hcTotal: 25,
     pipeline: { cv: 145, firstInterview: 55, secondInterview: 20, offers: 16 },
-    rejectReasons: { notFitSkills: 55, lowExp: 18, salaryMismatch: 12, other: 8 },
-    levelDistribution: {
-      '1.1': 5,
-      '1.2': 8,
-      '1.3': 7,
-      '2.1': 4,
-      '2.2': 1,
-      '2.3': 0,
+    timeToFill: 19,
+    offerAcceptanceRate: 50,
+    offersCount: 16,
+    onboardedCount: 8,
+    rejectReasons: {
+      byStage: {
+        cv: {
+          skillsMismatch: 16,
+          insufficientExp: 8,
+          overqualified: 2,
+          language: 2,
+        },
+        firstInterview: {
+          skillsMismatch: 8,
+          compensationMismatch: 5,
+          location: 2,
+          other: 2,
+        },
+        secondInterview: {
+          compensationMismatch: 4,
+          background: 1,
+          positionClosed: 2,
+          notProgressedInTime: 3,
+        },
+        offer: {
+          candidateDeclined: 5,
+          compSalary: 2,
+          cultureFit: 1,
+          careerPath: 1,
+          personalReason: 1,
+          companyWithdrew: 3,
+        },
+      },
+      allReasons: {
+        skillsMismatch: 28,
+        insufficientExp: 12,
+        overqualified: 6,
+        compensationMismatch: 10,
+        location: 4,
+        language: 2,
+        background: 1,
+        positionClosed: 2,
+        notProgressedInTime: 3,
+        other: 6,
+      },
+      candidateWithdrawn: 20,
     },
-    byTeam: { PEN: 3, GDS: 2, GIO: 1, PRO: 1, PIN: 1 },
-    aiInsight: 'September shows slower hiring pace. Focus on mid-level positions (1.2-1.3). Recommend increasing sourcing efforts.',
   },
 };
 
@@ -965,7 +1215,7 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
  * @param team - Optional team filter (defaults to all teams if omitted)
  * @returns HiringSummary with filtered metrics
  */
-export const getHiringSummaryByDateRange = (startDate: string, _endDate: string, team?: string): HiringSummary => {
+export const getHiringSummaryByDateRange = (startDate: string, _endDate: string, team?: string, level?: string): HiringSummary => {
   const startMonth = new Date(startDate).getMonth() + 1;
   const baseKey = startMonth === 8 ? 'aug_all' : 'sep_all';
   const summary = mockHiringSummaries[baseKey];
@@ -976,7 +1226,6 @@ export const getHiringSummaryByDateRange = (startDate: string, _endDate: string,
     return {
       ...summary,
       team,
-      byTeam: { [team]: summary.byTeam[team as keyof typeof summary.byTeam] || 0 },
       totalHired: Math.ceil(summary.totalHired / 5),
       hcTotal: Math.ceil(summary.hcTotal / 5),
       pipeline: {
@@ -985,6 +1234,10 @@ export const getHiringSummaryByDateRange = (startDate: string, _endDate: string,
         secondInterview: Math.ceil(summary.pipeline.secondInterview / 5),
         offers: Math.ceil(summary.pipeline.offers / 5),
       },
+      timeToFill: Math.ceil(summary.timeToFill),
+      offerAcceptanceRate: summary.offerAcceptanceRate,
+      offersCount: Math.ceil(summary.offersCount / 5),
+      onboardedCount: Math.ceil(summary.onboardedCount / 5),
     };
   }
 

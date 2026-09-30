@@ -14,13 +14,16 @@ export interface Position {
     offers: number
   }
   rejectReasons: {
-    notFitSkills: number
-    lowExp: number
-    salaryMismatch: number
-    other: number
+    byStage?: {
+      cv?: Record<string, number>
+      firstInterview?: Record<string, number>
+      secondInterview?: Record<string, number>
+    }
+    candidateWithdrawn: number
   }
   createdDate: string
   estimatedFillDays: number
+  onboardedCount: number
 }
 
 export interface Candidate {
@@ -42,10 +45,20 @@ export interface HiringSummary {
   salaryRange: string
   hcTotal: number
   pipeline: { cv: number; firstInterview: number; secondInterview: number; offers: number }
-  rejectReasons: Record<string, number>
-  levelDistribution: Record<string, number>
-  byTeam: Record<string, number>
-  aiInsight: string
+  timeToFill: number
+  offerAcceptanceRate: number
+  offersCount: number
+  onboardedCount: number
+  rejectReasons: {
+    byStage?: {
+      cv?: Record<string, number>
+      firstInterview?: Record<string, number>
+      secondInterview?: Record<string, number>
+      offer?: Record<string, number>
+    }
+    allReasons: Record<string, number>
+    candidateWithdrawn: number
+  }
 }
 
 export type UserRole = 'hrbp' | 'head_of_ta'
