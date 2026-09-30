@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { parse, isValid, isBefore } from 'date-fns';
 
 export interface HistoricalQueryParams {
   startDate: string;
@@ -34,8 +35,20 @@ export function HistoricalTabQueryForm({
       newErrors.endDate = 'End date is required';
     }
 
-    if (startDate && endDate && startDate > endDate) {
-      newErrors.dateRange = 'Start date must be before end date';
+    // Use date-fns utilities to parse and validate dates
+    if (startDate && endDate) {
+      const parsedStartDate = parse(startDate, 'yyyy-MM-dd', new Date());
+      const parsedEndDate = parse(endDate, 'yyyy-MM-dd', new Date());
+
+      // Validate that dates were parsed correctly
+      if (!isValid(parsedStartDate)) {
+        newErrors.startDate = 'Invalid start date format';
+      } else if (!isValid(parsedEndDate)) {
+        newErrors.endDate = 'Invalid end date format';
+      } else if (isBefore(parsedEndDate, parsedStartDate)) {
+        // Use isBefore for proper date comparison
+        newErrors.dateRange = 'Start date must be before end date';
+      }
     }
 
     setErrors(newErrors);
