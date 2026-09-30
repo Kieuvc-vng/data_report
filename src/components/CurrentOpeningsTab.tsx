@@ -1,35 +1,45 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { Position } from '../types';
-import { TeamFilter } from './TeamFilter';
+import { FilterBar } from './FilterBar';
 import { SummaryCards } from './SummaryCards';
 import { PositionAccordion } from './PositionAccordion';
 import { useSummaryMetrics } from '../hooks/useSummaryMetrics';
 
 interface CurrentOpeningsTabProps {
   positions: Position[];
-  activeTeam: string;
-  onTeamChange: (team: string) => void;
 }
 
 export function CurrentOpeningsTab({
   positions,
-  activeTeam,
-  onTeamChange,
 }: CurrentOpeningsTabProps) {
-  // Filter positions by team
+  const [selectedTeams, setSelectedTeams] = useState<Set<string>>(new Set(['PEN', 'GDS', 'GIO', 'PRO', 'PIN']));
+  const [selectedLevels, setSelectedLevels] = useState<Set<string>>(new Set(['1.1', '1.2', '1.3', '2.1', '2.2', '2.3']));
+  const [selectedPriorities, setSelectedPriorities] = useState<Set<string>>(new Set(['P1', 'P2', 'P3']));
+
+  // Filter positions using AND logic for all three filters
   const filteredPositions = useMemo(() => {
-    return activeTeam === 'All Teams'
-      ? positions
-      : positions.filter((p) => p.team === activeTeam);
-  }, [positions, activeTeam]);
+    return positions.filter((p) => {
+      const teamMatch = selectedTeams.size === 0 || selectedTeams.has(p.team);
+      const levelMatch = selectedLevels.size === 0 || selectedLevels.has(p.level);
+      const priorityMatch = selectedPriorities.size === 0 || selectedPriorities.has(p.priority);
+      return teamMatch && levelMatch && priorityMatch;
+    });
+  }, [positions, selectedTeams, selectedLevels, selectedPriorities]);
 
   // Calculate metrics for filtered positions
-  const metrics = useSummaryMetrics(positions, activeTeam === 'All Teams' ? undefined : activeTeam);
+  const metrics = useSummaryMetrics(filteredPositions);
 
   return (
     <div className="space-y-8">
-      {/* Team Filter */}
-      <TeamFilter activeTeam={activeTeam} onTeamChange={onTeamChange} />
+      {/* Filter Bar */}
+      <FilterBar
+        selectedTeams={selectedTeams}
+        selectedLevels={selectedLevels}
+        selectedPriorities={selectedPriorities}
+        onTeamsChange={setSelectedTeams}
+        onLevelsChange={setSelectedLevels}
+        onPrioritiesChange={setSelectedPriorities}
+      />
 
       {/* Summary Cards */}
       <SummaryCards {...metrics} />
@@ -45,7 +55,7 @@ export function CurrentOpeningsTab({
           <PositionAccordion positions={filteredPositions} />
         ) : (
           <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-500">No positions found for {activeTeam}</p>
+            <p className="text-gray-500">No positions found with selected filters</p>
           </div>
         )}
       </div>

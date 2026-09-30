@@ -48,10 +48,11 @@ export function PositionAccordion({ positions }: PositionAccordionProps) {
             {isExpanded && (
               <div>
                 {/* Header Row - Hide on mobile, show on md and up */}
-                <div className="hidden md:grid grid-cols-5 gap-4 py-3 px-4 bg-gray-50 font-semibold text-xs text-gray-600 uppercase border-b border-gray-200">
+                <div className="hidden md:grid grid-cols-6 gap-4 py-3 px-4 bg-gray-50 font-semibold text-xs text-gray-600 uppercase border-b border-gray-200 items-start">
+                  <div>Job Code</div>
                   <div>Position</div>
+                  <div>Manager</div>
                   <div className="text-center">HC</div>
-                  <div>Salary</div>
                   <div>Priority</div>
                   <div className="text-right">Pipeline</div>
                 </div>

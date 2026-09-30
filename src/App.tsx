@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { TabNavigation } from './components/TabNavigation';
 import { CurrentOpeningsTab } from './components/CurrentOpeningsTab';
 import { HistoricalTabQueryForm } from './components/HistoricalTabQueryForm';
 import { HistoricalAnalyticsPage } from './components/HistoricalAnalyticsPage';
+import { PositionDetailPage } from './components/PositionDetailPage';
 import { useAuthStore } from './stores/authStore';
 import { useHiringStore } from './stores/hiringStore';
 import { mockPositions, mockCandidates, getHiringSummaryByDateRange } from './data/mockData';
@@ -11,7 +13,6 @@ import type { HiringSummary } from './types';
 
 function App() {
   const [activeTab, setActiveTab] = useState('current');
-  const [activeTeam, setActiveTeam] = useState('All Teams');
   const [historicalQuery, setHistoricalQuery] = useState<{
     startDate: string;
     endDate: string;
@@ -87,11 +88,7 @@ function App() {
       id: 'current',
       label: 'Current Opening Positions',
       content: (
-        <CurrentOpeningsTab
-          positions={positions}
-          activeTeam={activeTeam}
-          onTeamChange={setActiveTeam}
-        />
+        <CurrentOpeningsTab positions={positions} />
       ),
     },
     {
@@ -104,16 +101,49 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        <TabNavigation
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="min-h-screen bg-gray-50">
+              <Header />
+              <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+                <TabNavigation
+                  tabs={tabs}
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+              </main>
+            </div>
+          }
         />
-      </main>
-    </div>
+        <Route
+          path="/current-openings"
+          element={
+            <div className="min-h-screen bg-gray-50">
+              <Header />
+              <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+                <TabNavigation
+                  tabs={tabs}
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+              </main>
+            </div>
+          }
+        />
+        <Route
+          path="/positions/:jobCode"
+          element={
+            <div className="min-h-screen bg-gray-50">
+              <Header />
+              <PositionDetailPage />
+            </div>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

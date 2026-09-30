@@ -12,6 +12,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-PEN-4001',
+    lineManager: { name: 'Nguyễn Văn A', email: 'nguyen.van.a@vng.com.vn' },
     pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -34,6 +36,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PEN-4002',
+    lineManager: { name: 'Trần Thị Minh', email: 'tran.minh@vng.com.vn' },
     pipeline: { cv: 15, firstInterview: 5, secondInterview: 2, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -55,6 +59,8 @@ export const mockPositions: Position[] = [
     hc: 3,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-PEN-4003',
+    lineManager: { name: 'Nguyễn Văn A', email: 'nguyen.van.a@vng.com.vn' },
     pipeline: { cv: 25, firstInterview: 10, secondInterview: 3, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -77,6 +83,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-PEN-4004',
+    lineManager: { name: 'Trần Thị Minh', email: 'tran.minh@vng.com.vn' },
     pipeline: { cv: 12, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -98,6 +106,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PEN-4005',
+    lineManager: { name: 'Nguyễn Văn A', email: 'nguyen.van.a@vng.com.vn' },
     pipeline: { cv: 18, firstInterview: 7, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -119,6 +129,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'filled',
+    jobCode: '26-PEN-4006',
+    lineManager: { name: 'Trần Thị Minh', email: 'tran.minh@vng.com.vn' },
     pipeline: { cv: 8, firstInterview: 3, secondInterview: 1, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -140,6 +152,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P3',
     status: 'open',
+    jobCode: '26-PEN-4007',
+    lineManager: { name: 'Nguyễn Văn A', email: 'nguyen.van.a@vng.com.vn' },
     pipeline: { cv: 6, firstInterview: 2, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -161,6 +175,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PEN-4008',
+    lineManager: { name: 'Trần Thị Minh', email: 'tran.minh@vng.com.vn' },
     pipeline: { cv: 30, firstInterview: 12, secondInterview: 4, offers: 2 },
     rejectReasons: {
       byStage: {
@@ -184,6 +200,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-GDS-4009',
+    lineManager: { name: 'Phạm Văn Hùng', email: 'pham.hung@vng.com.vn' },
     pipeline: { cv: 14, firstInterview: 6, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -205,6 +223,8 @@ export const mockPositions: Position[] = [
     hc: 3,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-GDS-4010',
+    lineManager: { name: 'Lê Thị Hương', email: 'le.huong@vng.com.vn' },
     pipeline: { cv: 22, firstInterview: 9, secondInterview: 3, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -227,6 +247,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-GDS-4011',
+    lineManager: { name: 'Phạm Văn Hùng', email: 'pham.hung@vng.com.vn' },
     pipeline: { cv: 10, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -248,6 +270,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-GDS-4012',
+    lineManager: { name: 'Lê Thị Hương', email: 'le.huong@vng.com.vn' },
     pipeline: { cv: 7, firstInterview: 3, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -269,6 +293,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-GDS-4013',
+    lineManager: { name: 'Phạm Văn Hùng', email: 'pham.hung@vng.com.vn' },
     pipeline: { cv: 16, firstInterview: 6, secondInterview: 2, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -292,6 +318,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-GIO-4014',
+    lineManager: { name: 'Hoàng Minh Khoa', email: 'hoang.khoa@vng.com.vn' },
     pipeline: { cv: 13, firstInterview: 5, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -313,6 +341,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-GIO-4015',
+    lineManager: { name: 'Dương Thị Lan', email: 'duong.lan@vng.com.vn' },
     pipeline: { cv: 11, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -334,6 +364,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-GIO-4016',
+    lineManager: { name: 'Hoàng Minh Khoa', email: 'hoang.khoa@vng.com.vn' },
     pipeline: { cv: 9, firstInterview: 3, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -355,6 +387,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P3',
     status: 'open',
+    jobCode: '26-GIO-4017',
+    lineManager: { name: 'Dương Thị Lan', email: 'duong.lan@vng.com.vn' },
     pipeline: { cv: 17, firstInterview: 7, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -378,6 +412,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'filled',
+    jobCode: '26-PRO-4018',
+    lineManager: { name: 'Võ Quang Huy', email: 'vo.huy@vng.com.vn' },
     pipeline: { cv: 6, firstInterview: 2, secondInterview: 1, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -399,6 +435,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-PRO-4019',
+    lineManager: { name: 'Đặng Thị Thu', email: 'dang.thu@vng.com.vn' },
     pipeline: { cv: 12, firstInterview: 5, secondInterview: 2, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -420,6 +458,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PRO-4020',
+    lineManager: { name: 'Võ Quang Huy', email: 'vo.huy@vng.com.vn' },
     pipeline: { cv: 18, firstInterview: 8, secondInterview: 3, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -441,6 +481,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PRO-4021',
+    lineManager: { name: 'Đặng Thị Thu', email: 'dang.thu@vng.com.vn' },
     pipeline: { cv: 14, firstInterview: 6, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -464,6 +506,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P1',
     status: 'open',
+    jobCode: '26-PIN-4022',
+    lineManager: { name: 'Bùi Văn Nam', email: 'bui.nam@vng.com.vn' },
     pipeline: { cv: 10, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -485,6 +529,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PIN-4023',
+    lineManager: { name: 'Mạc Thị Hoa', email: 'mac.hoa@vng.com.vn' },
     pipeline: { cv: 8, firstInterview: 3, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
@@ -506,6 +552,8 @@ export const mockPositions: Position[] = [
     hc: 2,
     priority: 'P3',
     status: 'open',
+    jobCode: '26-PIN-4024',
+    lineManager: { name: 'Bùi Văn Nam', email: 'bui.nam@vng.com.vn' },
     pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
@@ -527,6 +575,8 @@ export const mockPositions: Position[] = [
     hc: 1,
     priority: 'P2',
     status: 'open',
+    jobCode: '26-PIN-4025',
+    lineManager: { name: 'Mạc Thị Hoa', email: 'mac.hoa@vng.com.vn' },
     pipeline: { cv: 12, firstInterview: 5, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {

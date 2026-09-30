@@ -7,6 +7,11 @@ export interface Position {
   hc: number
   priority: 'P1' | 'P2' | 'P3'
   status: 'open' | 'filled' | 'closed'
+  jobCode?: string
+  lineManager?: {
+    name: string
+    email: string
+  }
   pipeline: {
     cv: number
     firstInterview: number
