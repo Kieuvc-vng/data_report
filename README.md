@@ -5,7 +5,7 @@ A modern, data-driven hiring analytics platform built with React 19, TypeScript,
 ## Features
 
 - **Query Form**: Filter hiring data by date range, team, and position with an intuitive form interface
-- **Results Modal**: Display comprehensive analytics in a full-featured modal with seamless navigation
+- **Full-Page Analytics**: Display comprehensive analytics in a full-page view with seamless back-to-query navigation
 - **4 Interactive Charts**:
   - Pipeline Funnel Chart: Visualize candidate progression through hiring stages
   - Rejection Reasons Bar Chart: Analyze why candidates are rejected
@@ -82,12 +82,13 @@ Export hiring summaries to CSV format for spreadsheet analysis. Generate profess
 
 | Component | Purpose |
 |-----------|---------|
-| **App** | Main application container, tab management, and modal state |
+| **App** | Main application container, tab management, and full-page navigation state |
 | **Header** | Navigation bar with branding and user information |
 | **TabNavigation** | Tab switching between Current Openings and Historical Data |
 | **CurrentOpeningsTab** | Displays active positions with team filtering capability |
 | **HistoricalTabQueryForm** | Form interface for date range and filter selection |
-| **ResultsModal** | Full-screen analytics display with charts and export options |
+| **HistoricalAnalyticsPage** | Full-page analytics display with charts, metrics, and export options |
+| **ResultsModal** | Legacy modal component (deprecated - replaced by HistoricalAnalyticsPage) |
 | **SummaryCards** | Summary metric cards displaying key KPIs and statistics |
 | **PositionRow** | Individual position item in positions list |
 | **PositionAccordion** | Expandable position details with candidate information |
@@ -119,8 +120,23 @@ const handleHistoricalQuery = (params) => {
     params.team
   );
   setHiringSummary(summary);
-  setShowResultsModal(true);
+  setShowAnalyticsPage(true);  // Navigate to full-page analytics
 };
+
+// Return full-page analytics view
+if (showAnalyticsPage && hiringSummary) {
+  return (
+    <HistoricalAnalyticsPage
+      summary={hiringSummary}
+      query={historicalQuery}
+      onBack={() => {
+        setShowAnalyticsPage(false);
+        setHistoricalQuery(null);
+        setHiringSummary(null);
+      }}
+    />
+  );
+}
 ```
 
 ### Export Data to CSV
@@ -291,5 +307,6 @@ For issues, questions, or contributions, please contact the development team or 
 
 ---
 
-**Last Updated**: September 2026  
-**Version**: 0.0.0
+**Last Updated**: September 30, 2026  
+**Version**: 0.1.0  
+**Latest Changes**: Implemented Option B - Full-Page Analytics Navigation (replaces modal with full-page view)
