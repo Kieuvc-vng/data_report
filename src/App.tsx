@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { TabNavigation } from './components/TabNavigation';
+import { TeamFilter } from './components/TeamFilter';
 import { useAuthStore } from './stores/authStore';
 import { useHiringStore } from './stores/hiringStore';
 import { mockPositions, mockCandidates } from './data/mockData';
 
 function App() {
   const [activeTab, setActiveTab] = useState('current');
+  const [activeTeam, setActiveTeam] = useState('All Teams');
 
   // Initialize stores with mock data
   const hiringStore = useHiringStore();
@@ -25,9 +27,12 @@ function App() {
       id: 'current',
       label: 'Current Opening Positions',
       content: (
-        <div className="bg-white rounded-lg shadow p-8">
-          <h2 className="text-2xl font-bold mb-4">Current Opening Positions</h2>
-          <p className="text-gray-600">Content coming in Task 10+</p>
+        <div>
+          <TeamFilter activeTeam={activeTeam} onTeamChange={setActiveTeam} />
+          <div className="bg-white rounded-lg shadow p-8">
+            <h3 className="text-xl font-bold mb-2">Positions for {activeTeam}</h3>
+            <p className="text-gray-600">Positions content coming in Task 10+</p>
+          </div>
         </div>
       ),
     },
