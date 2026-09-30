@@ -3,7 +3,7 @@ import { Header } from './components/Header';
 import { TabNavigation } from './components/TabNavigation';
 import { CurrentOpeningsTab } from './components/CurrentOpeningsTab';
 import { HistoricalTabQueryForm } from './components/HistoricalTabQueryForm';
-import { ResultsModal } from './components/ResultsModal';
+import { HistoricalAnalyticsPage } from './components/HistoricalAnalyticsPage';
 import { useAuthStore } from './stores/authStore';
 import { useHiringStore } from './stores/hiringStore';
 import { mockPositions, mockCandidates, getHiringSummaryByDateRange } from './data/mockData';
@@ -18,7 +18,7 @@ function App() {
     team?: string;
     position?: string;
   } | null>(null);
-  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [showAnalyticsPage, setShowAnalyticsPage] = useState(false);
   const [hiringSummary, setHiringSummary] = useState<HiringSummary | null>(null);
 
   // Initialize stores with mock data
@@ -48,8 +48,26 @@ function App() {
       params.team
     );
     setHiringSummary(summary);
-    setShowResultsModal(true);
+    setShowAnalyticsPage(true);
   };
+
+  // Show analytics page when query is submitted
+  if (showAnalyticsPage && hiringSummary) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <HistoricalAnalyticsPage
+          summary={hiringSummary}
+          query={historicalQuery}
+          onBack={() => {
+            setShowAnalyticsPage(false);
+            setHistoricalQuery(null);
+            setHiringSummary(null);
+          }}
+        />
+      </div>
+    );
+  }
 
   const tabs = [
     {
@@ -67,33 +85,7 @@ function App() {
       id: 'historical',
       label: 'Historical Data',
       content: (
-        <div className="space-y-8">
-          <HistoricalTabQueryForm onSubmit={handleHistoricalQuery} />
-          {historicalQuery && (
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Query Submitted</h3>
-              <div className="space-y-2 text-gray-600">
-                <p>
-                  <strong>Date Range:</strong> {historicalQuery.startDate} to{' '}
-                  {historicalQuery.endDate}
-                </p>
-                {historicalQuery.team && (
-                  <p>
-                    <strong>Team:</strong> {historicalQuery.team}
-                  </p>
-                )}
-                {historicalQuery.position && (
-                  <p>
-                    <strong>Position:</strong> {historicalQuery.position}
-                  </p>
-                )}
-              </div>
-              <p className="text-blue-600 mt-4 text-sm font-semibold">
-                ✓ Check the modal for detailed analytics and charts
-              </p>
-            </div>
-          )}
-        </div>
+        <HistoricalTabQueryForm onSubmit={handleHistoricalQuery} />
       ),
     },
   ];
@@ -108,12 +100,6 @@ function App() {
           onTabChange={setActiveTab}
         />
       </main>
-      {showResultsModal && hiringSummary && (
-        <ResultsModal
-          summary={hiringSummary}
-          onClose={() => setShowResultsModal(false)}
-        />
-      )}
     </div>
   );
 }
