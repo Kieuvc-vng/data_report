@@ -1,4 +1,4 @@
-import { Position } from '../types';
+import type { Position } from '../types';
 
 export function useSummaryMetrics(positions: Position[], team?: string) {
   const filtered = !team || team === 'All Teams'
