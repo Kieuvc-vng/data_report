@@ -6,11 +6,14 @@ A modern, data-driven hiring analytics platform built with React 19, TypeScript,
 
 - **Query Form**: Filter hiring data by date range, team, and position with an intuitive form interface
 - **Full-Page Analytics**: Display comprehensive analytics in a full-page view with seamless back-to-query navigation
-- **4 Interactive Charts**:
-  - Pipeline Funnel Chart: Visualize candidate progression through hiring stages
-  - Rejection Reasons Bar Chart: Analyze why candidates are rejected
-  - Level Distribution Bar Chart: Track candidate experience levels across roles
-  - Team Performance Bar Chart: Compare hiring metrics across teams
+- **Interactive Charts & Visualizations**:
+  - Pipeline Flow Chart: Unified 5-stage pipeline visualization with drop indicators and rejection analysis
+    - Tracks candidates through CV → 1st Interview → 2nd Interview → Offer → Offer Accepted
+    - Shows drop counts between stages with detailed rejection reason popover
+    - Offer stage breakdown: Candidate Declined (with sub-reasons) + Company Withdrew
+  - Rejection Reasons Analysis: Detailed breakdown by pipeline stage and candidate withdrawal tracking
+- **Advanced Filtering**: Multi-select team and level filters with intelligent display logic
+- **Rejection Tracking**: Detailed rejection popover with hierarchical breakdown by pipeline stage
 - **CSV Export**: Download hiring summary data in CSV format with proper formatting
 - **PDF Export**: Generate professional PDF reports with charts and metrics
 - **Current Openings Tab**: Browse and filter active job positions by team
@@ -88,6 +91,10 @@ Export hiring summaries to CSV format for spreadsheet analysis. Generate profess
 | **CurrentOpeningsTab** | Displays active positions with team filtering capability |
 | **HistoricalTabQueryForm** | Form interface for date range and filter selection |
 | **HistoricalAnalyticsPage** | Full-page analytics display with charts, metrics, and export options |
+| **FilterBar** | Multi-select filter container for team and level selection |
+| **FilterDropdown** | Reusable dropdown component with multi-select and smart label display |
+| **PipelineFlowChart** | Unified 5-stage pipeline visualization with drop indicators and rejection analysis |
+| **RejectionPopover** | Modal component displaying detailed rejection breakdown by pipeline stage |
 | **ResultsModal** | Legacy modal component (deprecated - replaced by HistoricalAnalyticsPage) |
 | **SummaryCards** | Summary metric cards displaying key KPIs and statistics |
 | **PositionRow** | Individual position item in positions list |
@@ -307,6 +314,12 @@ For issues, questions, or contributions, please contact the development team or 
 
 ---
 
-**Last Updated**: September 30, 2026  
-**Version**: 0.1.0  
-**Latest Changes**: Implemented Option B - Full-Page Analytics Navigation (replaces modal with full-page view)
+**Last Updated**: October 1, 2026  
+**Version**: 0.2.0  
+**Latest Changes**: Phase 4 & 5 Complete - Hiring Dashboard Analytics Redesign
+- Created PipelineFlowChart component: unified 5-stage pipeline with drop indicators and rejection analysis
+- Created RejectionPopover component: detailed rejection breakdown by stage
+- Created FilterBar & FilterDropdown: multi-select filtering with intelligent label display
+- Updated data structures with nested rejection reasons (byStage + offer stage breakdown)
+- Enhanced mock data with candidate decline reasons (Comp & Salary, Culture Fit, Career Path, Personal)
+- Updated export utilities (CSV/PDF) with new metrics and layout
