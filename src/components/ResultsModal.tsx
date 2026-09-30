@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -12,6 +12,7 @@ import {
   Cell,
 } from 'recharts';
 import type { HiringSummary } from '../types';
+import { exportToCSV, exportToPDF, generateFilename } from '../utils';
 
 interface ResultsModalProps {
   summary: HiringSummary;
@@ -108,6 +109,7 @@ const getByTeamData = (summary: HiringSummary): Array<{ name: string; value: num
 };
 
 export const ResultsModal = React.memo(function ResultsModal({ summary, onClose }: ResultsModalProps) {
+  const [isExporting, setIsExporting] = useState(false);
   const pipelineData = useMemo(() => getPipelineData(summary), [summary]);
   const rejectReasonsData = useMemo(() => getRejectReasonsData(summary), [summary]);
   const levelDistributionData = useMemo(() => getLevelDistributionData(summary), [summary]);
@@ -121,6 +123,32 @@ export const ResultsModal = React.memo(function ResultsModal({ summary, onClose 
     // Only close if clicking the overlay itself, not the modal content
     if (e.target === e.currentTarget) {
       onClose();
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      setIsExporting(true);
+      const filename = generateFilename('hiring-summary', 'csv');
+      exportToCSV(summary, filename);
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Failed to export CSV. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleExportPDF = () => {
+    try {
+      setIsExporting(true);
+      const filename = generateFilename('hiring-summary', 'pdf');
+      exportToPDF(summary, filename);
+      setIsExporting(false);
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Failed to export PDF. Please try again.');
+      setIsExporting(false);
     }
   };
 
@@ -346,11 +374,18 @@ export const ResultsModal = React.memo(function ResultsModal({ summary, onClose 
             Close
           </button>
           <button
-            disabled
-            title="Export feature coming in Task 14"
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleExportCSV}
+            disabled={isExporting}
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            📊 Export (Task 14)
+            {isExporting ? '⏳' : '📊'} Export CSV
+          </button>
+          <button
+            onClick={handleExportPDF}
+            disabled={isExporting}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isExporting ? '⏳' : '📄'} Export PDF
           </button>
         </div>
       </div>
