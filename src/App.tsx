@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { TabNavigation } from './components/TabNavigation';
 import { CurrentOpeningsTab } from './components/CurrentOpeningsTab';
 import { HistoricalTabQueryForm } from './components/HistoricalTabQueryForm';
+import { ResultsModal } from './components/ResultsModal';
 import { useAuthStore } from './stores/authStore';
 import { useHiringStore } from './stores/hiringStore';
-import { mockPositions, mockCandidates } from './data/mockData';
+import { mockPositions, mockCandidates, getHiringSummaryByDateRange } from './data/mockData';
+import type { HiringSummary } from './types';
 
 function App() {
   const [activeTab, setActiveTab] = useState('current');
@@ -16,6 +18,8 @@ function App() {
     team?: string;
     position?: string;
   } | null>(null);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [hiringSummary, setHiringSummary] = useState<HiringSummary | null>(null);
 
   // Initialize stores with mock data
   const hiringStore = useHiringStore();
@@ -23,7 +27,7 @@ function App() {
   const positions = hiringStore.positions;
 
   // Set mock data on mount (in Phase 2, this will be from API)
-  React.useEffect(() => {
+  useEffect(() => {
     hiringStore.setPositions(mockPositions);
     hiringStore.setCandidates(mockCandidates);
     // Default: Head of TA with all teams access
@@ -37,6 +41,14 @@ function App() {
     position?: string;
   }) => {
     setHistoricalQuery(params);
+    // Fetch hiring summary based on query params
+    const summary = getHiringSummaryByDateRange(
+      params.startDate,
+      params.endDate,
+      params.team
+    );
+    setHiringSummary(summary);
+    setShowResultsModal(true);
   };
 
   const tabs = [
@@ -59,7 +71,7 @@ function App() {
           <HistoricalTabQueryForm onSubmit={handleHistoricalQuery} />
           {historicalQuery && (
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Query Results</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Query Submitted</h3>
               <div className="space-y-2 text-gray-600">
                 <p>
                   <strong>Date Range:</strong> {historicalQuery.startDate} to{' '}
@@ -76,8 +88,8 @@ function App() {
                   </p>
                 )}
               </div>
-              <p className="text-gray-500 mt-4 text-sm">
-                Charts and detailed data will be displayed here (Task 13+)
+              <p className="text-blue-600 mt-4 text-sm font-semibold">
+                ✓ Check the modal for detailed analytics and charts
               </p>
             </div>
           )}
@@ -96,6 +108,12 @@ function App() {
           onTabChange={setActiveTab}
         />
       </main>
+      {showResultsModal && hiringSummary && (
+        <ResultsModal
+          summary={hiringSummary}
+          onClose={() => setShowResultsModal(false)}
+        />
+      )}
     </div>
   );
 }
