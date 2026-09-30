@@ -21,6 +21,8 @@ function App() {
   const [showAnalyticsPage, setShowAnalyticsPage] = useState(false);
   const [hiringSummary, setHiringSummary] = useState<HiringSummary | null>(null);
 
+  console.log('🔍 App rendering - showAnalyticsPage:', showAnalyticsPage, 'has summary:', !!hiringSummary);
+
   // Initialize stores with mock data
   const hiringStore = useHiringStore();
   const authStore = useAuthStore();
@@ -40,32 +42,43 @@ function App() {
     team?: string;
     position?: string;
   }) => {
+    console.log('🔍 handleHistoricalQuery called');
     setHistoricalQuery(params);
-    // Fetch hiring summary based on query params
     const summary = getHiringSummaryByDateRange(
       params.startDate,
       params.endDate,
       params.team
     );
+    console.log('🔍 Setting showAnalyticsPage to true, summary:', summary);
     setHiringSummary(summary);
     setShowAnalyticsPage(true);
   };
 
+  const tabLabels = [
+    {
+      id: 'current',
+      label: 'Current Opening Positions',
+    },
+    {
+      id: 'historical',
+      label: 'Historical Data',
+    },
+  ];
+
   // Show analytics page when query is submitted
   if (showAnalyticsPage && hiringSummary) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <HistoricalAnalyticsPage
-          summary={hiringSummary}
-          query={historicalQuery}
-          onBack={() => {
-            setShowAnalyticsPage(false);
-            setHistoricalQuery(null);
-            setHiringSummary(null);
-          }}
-        />
-      </div>
+      <HistoricalAnalyticsPage
+        summary={hiringSummary}
+        query={historicalQuery}
+        tabs={tabLabels}
+        activeTab="historical"
+        onBack={() => {
+          setShowAnalyticsPage(false);
+          setHistoricalQuery(null);
+          setHiringSummary(null);
+        }}
+      />
     );
   }
 

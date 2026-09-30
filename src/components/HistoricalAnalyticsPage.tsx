@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import type { HiringSummary } from '../types';
 import { exportToCSV, exportToPDF, generateFilename } from '../utils';
+import { Header } from './Header';
 
 interface HistoricalAnalyticsPageProps {
   summary: HiringSummary;
@@ -23,6 +24,8 @@ interface HistoricalAnalyticsPageProps {
     position?: string;
   } | null;
   onBack: () => void;
+  tabs?: Array<{ id: string; label: string }>;
+  activeTab?: string;
 }
 
 // Chart dimensions
@@ -102,6 +105,8 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
   summary,
   query,
   onBack,
+  tabs,
+  activeTab,
 }: HistoricalAnalyticsPageProps) {
   const [isExporting, setIsExporting] = useState(false);
   const pipelineData = useMemo(() => getPipelineData(summary), [summary]);
@@ -140,11 +145,14 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Header with back button */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+
+      {/* Analytics Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
+          {/* Back button and title row */}
+          <div className="flex items-center gap-4 mb-4">
             <button
               onClick={onBack}
               className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
@@ -159,18 +167,39 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
               </svg>
               Back to Query
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Hiring Analytics</h1>
-            <div className="w-32" />
           </div>
-          <p className="text-sm text-gray-600 mt-2">
-            {dateRangeStr}
-            {query?.team && <span> • Team: {query.team}</span>}
-          </p>
+
+          {/* Title section */}
+          <div className="mb-4">
+            <h1 className="text-3xl font-bold text-gray-900">Hiring Analytics</h1>
+            <p className="text-gray-600 mt-2">
+              {dateRangeStr}
+              {query?.team && <span> • Team: {query.team}</span>}
+            </p>
+          </div>
+
+          {/* Tab navigation */}
+          {tabs && (
+            <div className="flex gap-8 border-t border-gray-200 pt-4">
+              {tabs.map((tab) => (
+                <div
+                  key={tab.id}
+                  className={`text-sm font-medium pb-4 border-b-2 transition-colors ${
+                    activeTab === tab.id
+                      ? 'text-blue-600 border-blue-600'
+                      : 'text-gray-600 border-transparent'
+                  }`}
+                >
+                  {tab.label}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      </header>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="space-y-8">
           {/* Summary Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -372,7 +401,7 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
             </button>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 });
