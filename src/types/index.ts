@@ -41,7 +41,7 @@ export interface HiringSummary {
   totalHired: number
   salaryRange: string
   hcTotal: number
-  pipeline: { cv: number; itv: number; offers: number }
+  pipeline: { cv: number; firstInterview: number; secondInterview: number; offers: number }
   rejectReasons: Record<string, number>
   levelDistribution: Record<string, number>
   byTeam: Record<string, number>

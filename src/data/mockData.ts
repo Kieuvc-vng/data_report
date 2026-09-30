@@ -925,7 +925,7 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
     totalHired: 12,
     salaryRange: '$45K-$120K',
     hcTotal: 32,
-    pipeline: { cv: 180, itv: 70, offers: 20 },
+    pipeline: { cv: 180, firstInterview: 70, secondInterview: 25, offers: 20 },
     rejectReasons: { notFitSkills: 70, lowExp: 20, salaryMismatch: 15, other: 10 },
     levelDistribution: {
       '1.1': 8,
@@ -943,7 +943,7 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
     totalHired: 8,
     salaryRange: '$48K-$125K',
     hcTotal: 25,
-    pipeline: { cv: 145, itv: 55, offers: 16 },
+    pipeline: { cv: 145, firstInterview: 55, secondInterview: 20, offers: 16 },
     rejectReasons: { notFitSkills: 55, lowExp: 18, salaryMismatch: 12, other: 8 },
     levelDistribution: {
       '1.1': 5,
@@ -981,7 +981,8 @@ export const getHiringSummaryByDateRange = (startDate: string, _endDate: string,
       hcTotal: Math.ceil(summary.hcTotal / 5),
       pipeline: {
         cv: Math.ceil(summary.pipeline.cv / 5),
-        itv: Math.ceil(summary.pipeline.itv / 5),
+        firstInterview: Math.ceil(summary.pipeline.firstInterview / 5),
+        secondInterview: Math.ceil(summary.pipeline.secondInterview / 5),
         offers: Math.ceil(summary.pipeline.offers / 5),
       },
     };

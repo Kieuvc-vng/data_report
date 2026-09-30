@@ -51,7 +51,8 @@ const formatDate = (dateStr: string): string => {
 const getPipelineData = (summary: HiringSummary) => {
   return [
     { name: 'CV Received', value: summary.pipeline.cv },
-    { name: '1st Interview', value: summary.pipeline.itv },
+    { name: '1st Interview', value: summary.pipeline.firstInterview },
+    { name: '2nd Interview', value: summary.pipeline.secondInterview },
     { name: 'Offer', value: summary.pipeline.offers },
   ];
 };
