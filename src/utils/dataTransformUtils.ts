@@ -149,17 +149,40 @@ export const calculateMetrics = (positions: Position[]): Record<string, number> 
 };
 
 /**
+ * Validates if a string is a valid date in YYYY-MM-DD format
+ * @param dateString - Date string to validate
+ * @returns True if valid, false otherwise
+ */
+export const validateDateString = (dateString: string): boolean => {
+  // Check format YYYY-MM-DD
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
+
+  // Check if valid date
+  const parsed = new Date(dateString);
+  return !isNaN(parsed.getTime());
+};
+
+/**
  * Filters data by date range
  * @param data - Array of items with createdDate
  * @param startDate - Start date (YYYY-MM-DD)
  * @param endDate - End date (YYYY-MM-DD)
  * @returns Filtered array
+ * @throws Error if date format is invalid
  */
 export const filterByDateRange = <T extends { createdDate: string }>(
   data: T[],
   startDate: string,
   endDate: string
 ): T[] => {
+  // Validate dates
+  if (!validateDateString(startDate) || !validateDateString(endDate)) {
+    throw new Error(
+      `Invalid date format. Expected YYYY-MM-DD. Got startDate: ${startDate}, endDate: ${endDate}`
+    );
+  }
+
   const start = new Date(startDate).getTime();
   const end = new Date(endDate).getTime();
 

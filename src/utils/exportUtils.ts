@@ -14,13 +14,25 @@ import {
 } from './dataTransformUtils';
 
 /**
+ * Escapes HTML special characters to prevent XSS attacks
+ * @param text - Text to escape
+ * @returns Escaped text safe for HTML interpolation
+ */
+const escapeHtml = (text: string | undefined): string => {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+};
+
+/**
  * Exports HiringSummary data to CSV format
  * @param data - HiringSummary object to export
  * @param filename - Optional filename (default: 'hiring-summary.csv')
  */
 export const exportToCSV = (data: HiringSummary, filename: string = 'hiring-summary.csv'): void => {
   try {
-    const csvContent = generateCSVContent(data);
+    const csvContent = generateHiringSummaryCSV(data);
     downloadFile(csvContent, filename, 'text/csv;charset=utf-8;');
   } catch (error) {
     console.error('Error exporting to CSV:', error);
@@ -36,7 +48,7 @@ export const exportToCSV = (data: HiringSummary, filename: string = 'hiring-summ
  */
 export const exportToPDF = (summary: HiringSummary, filename: string = 'hiring-summary.pdf'): void => {
   try {
-    const htmlContent = generatePDFContent(summary);
+    const htmlContent = generateHiringSummaryPDF(summary);
     const printWindow = window.open('', '_blank');
 
     if (!printWindow) {
@@ -65,11 +77,11 @@ export const exportToPDF = (summary: HiringSummary, filename: string = 'hiring-s
 };
 
 /**
- * Generates CSV content from HiringSummary
+ * Generates CSV content from HiringSummary (Pure function, testable)
  * @param data - HiringSummary object
  * @returns CSV content string
  */
-const generateCSVContent = (data: HiringSummary): string => {
+export const generateHiringSummaryCSV = (data: HiringSummary): string => {
   const rows: string[][] = [];
 
   // Title and date range
@@ -137,11 +149,11 @@ const generateCSVContent = (data: HiringSummary): string => {
 };
 
 /**
- * Generates printable HTML content for PDF export
+ * Generates printable HTML content for PDF export (Pure function, testable)
  * @param summary - HiringSummary object
  * @returns HTML string
  */
-const generatePDFContent = (summary: HiringSummary): string => {
+export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
   const dateRangeStr = `${formatDate(summary.dateRange.start)} - ${formatDate(summary.dateRange.end)}`;
   const pipelineData = transformPipelineData(summary);
   const rejectData = transformRejectReasonsData(summary);
@@ -312,8 +324,8 @@ const generatePDFContent = (summary: HiringSummary): string => {
       <div class="container">
         <header>
           <h1>Hiring Analytics Report</h1>
-          <div class="date-range">${dateRangeStr}</div>
-          ${summary.team ? `<div class="team-info">Team: ${summary.team}</div>` : ''}
+          <div class="date-range">${escapeHtml(dateRangeStr)}</div>
+          ${summary.team ? `<div class="team-info">Team: ${escapeHtml(summary.team)}</div>` : ''}
         </header>
 
         <section>
@@ -351,7 +363,7 @@ const generatePDFContent = (summary: HiringSummary): string => {
             <tbody>
               ${pipelineData.map(stage => `
                 <tr>
-                  <td>${stage.name}</td>
+                  <td>${escapeHtml(stage.name)}</td>
                   <td class="number">${formatNumber(stage.value)}</td>
                   <td class="number">${stage.percentage}%</td>
                 </tr>
@@ -373,7 +385,7 @@ const generatePDFContent = (summary: HiringSummary): string => {
             <tbody>
               ${rejectData.map(reason => `
                 <tr>
-                  <td>${reason.name}</td>
+                  <td>${escapeHtml(reason.name)}</td>
                   <td class="number">${formatNumber(reason.value)}</td>
                   <td class="number">${reason.percentage}%</td>
                 </tr>
@@ -395,7 +407,7 @@ const generatePDFContent = (summary: HiringSummary): string => {
             <tbody>
               ${levelData.map(level => `
                 <tr>
-                  <td>${level.name}</td>
+                  <td>${escapeHtml(level.name)}</td>
                   <td class="number">${formatNumber(level.value)}</td>
                   <td class="number">${level.percentage}%</td>
                 </tr>
@@ -417,7 +429,7 @@ const generatePDFContent = (summary: HiringSummary): string => {
             <tbody>
               ${teamData.map(team => `
                 <tr>
-                  <td>${team.name}</td>
+                  <td>${escapeHtml(team.name)}</td>
                   <td class="number">${formatNumber(team.value)}</td>
                   <td class="number">${team.percentage}%</td>
                 </tr>
@@ -429,7 +441,7 @@ const generatePDFContent = (summary: HiringSummary): string => {
         ${summary.aiInsight ? `
           <section>
             <h2>AI Insights</h2>
-            <div class="ai-insight">${summary.aiInsight}</div>
+            <div class="ai-insight">${escapeHtml(summary.aiInsight)}</div>
           </section>
         ` : ''}
       </div>

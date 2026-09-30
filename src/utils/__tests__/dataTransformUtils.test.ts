@@ -11,6 +11,7 @@ import {
   transformByTeamData,
   calculateMetrics,
   filterByDateRange,
+  validateDateString,
   groupBy,
   aggregateByKey,
   recordToChartData,
@@ -153,6 +154,33 @@ describe('Data Transformation Utilities', () => {
     });
   });
 
+  // validateDateString tests
+  describe('validateDateString', () => {
+    it('should validate correct date format YYYY-MM-DD', () => {
+      expect(validateDateString('2026-08-15')).toBe(true);
+      expect(validateDateString('2026-01-01')).toBe(true);
+      expect(validateDateString('2026-12-31')).toBe(true);
+    });
+
+    it('should reject invalid date format', () => {
+      expect(validateDateString('08-15-2026')).toBe(false);
+      expect(validateDateString('2026/08/15')).toBe(false);
+      expect(validateDateString('15-08-2026')).toBe(false);
+      expect(validateDateString('2026-8-15')).toBe(false);
+    });
+
+    it('should reject invalid dates', () => {
+      expect(validateDateString('2026-02-30')).toBe(false);
+      expect(validateDateString('2026-13-01')).toBe(false);
+      expect(validateDateString('2026-00-01')).toBe(false);
+    });
+
+    it('should reject empty or malformed strings', () => {
+      expect(validateDateString('')).toBe(false);
+      expect(validateDateString('invalid')).toBe(false);
+    });
+  });
+
   // filterByDateRange tests
   describe('filterByDateRange', () => {
     it('should filter items by date range', () => {
@@ -166,6 +194,37 @@ describe('Data Transformation Utilities', () => {
       const result = filterByDateRange(mockPositions, '2026-08-01', '2026-08-31');
 
       expect(result.length).toBe(2);
+    });
+
+    it('should throw error for invalid startDate format', () => {
+      expect(() => {
+        filterByDateRange(mockPositions, '08-15-2026', '2026-08-25');
+      }).toThrow('Invalid date format. Expected YYYY-MM-DD');
+    });
+
+    it('should throw error for invalid endDate format', () => {
+      expect(() => {
+        filterByDateRange(mockPositions, '2026-08-15', '25-08-2026');
+      }).toThrow('Invalid date format. Expected YYYY-MM-DD');
+    });
+
+    it('should throw error for invalid date values', () => {
+      expect(() => {
+        filterByDateRange(mockPositions, '2026-02-30', '2026-08-25');
+      }).toThrow('Invalid date format. Expected YYYY-MM-DD');
+    });
+
+    it('should throw error with descriptive message', () => {
+      expect(() => {
+        filterByDateRange(mockPositions, 'invalid', '2026-08-25');
+      }).toThrow(/Invalid date format.*startDate: invalid/);
+    });
+
+    it('should return empty array when no items in range', () => {
+      const result = filterByDateRange(mockPositions, '2026-09-01', '2026-09-30');
+
+      expect(result.length).toBe(0);
+      expect(result).toEqual([]);
     });
   });
 

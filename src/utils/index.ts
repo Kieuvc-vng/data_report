@@ -23,6 +23,7 @@ export {
   transformByTeamData,
   calculateMetrics,
   filterByDateRange,
+  validateDateString,
   groupBy,
   aggregateByKey,
   recordToChartData,
@@ -35,4 +36,6 @@ export {
   exportToPDF,
   exportPositionsToCSV,
   generateFilename,
+  generateHiringSummaryCSV,
+  generateHiringSummaryPDF,
 } from './exportUtils';
