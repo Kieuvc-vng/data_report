@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -16,6 +17,9 @@ interface ResultsModalProps {
   summary: HiringSummary;
   onClose: () => void;
 }
+
+// Chart dimensions
+const CHART_HEIGHT = 300;
 
 // Color palette for charts
 const COLORS = {
@@ -48,7 +52,7 @@ const formatDate = (dateStr: string): string => {
 /**
  * Transforms HiringSummary pipeline data to Funnel chart format
  */
-const getPipelineData = (summary: HiringSummary) => {
+const getPipelineData = (summary: HiringSummary): Array<{ name: string; value: number }> => {
   return [
     { name: 'CV Received', value: summary.pipeline.cv },
     { name: '1st Interview', value: summary.pipeline.firstInterview },
@@ -60,7 +64,7 @@ const getPipelineData = (summary: HiringSummary) => {
 /**
  * Transforms reject reasons to Bar chart format
  */
-const getRejectReasonsData = (summary: HiringSummary) => {
+const getRejectReasonsData = (summary: HiringSummary): Array<{ name: string; value: number }> => {
   const reasonLabels: Record<string, string> = {
     notFitSkills: 'Not Fit Skills',
     lowExp: 'Low Experience',
@@ -69,15 +73,15 @@ const getRejectReasonsData = (summary: HiringSummary) => {
   };
 
   return Object.entries(summary.rejectReasons).map(([key, value]) => ({
-    reason: reasonLabels[key] || key,
-    count: value,
+    name: reasonLabels[key] || key,
+    value,
   }));
 };
 
 /**
  * Transforms level distribution to Bar chart format
  */
-const getLevelDistributionData = (summary: HiringSummary) => {
+const getLevelDistributionData = (summary: HiringSummary): Array<{ name: string; value: number }> => {
   return Object.entries(summary.levelDistribution)
     .sort(([a], [b]) => {
       // Sort levels numerically
@@ -86,41 +90,48 @@ const getLevelDistributionData = (summary: HiringSummary) => {
       return aNum - bNum;
     })
     .map(([level, count]) => ({
-      level,
-      count,
+      name: level,
+      value: count,
     }));
 };
 
 /**
  * Transforms by-team data to Bar chart format
  */
-const getByTeamData = (summary: HiringSummary) => {
+const getByTeamData = (summary: HiringSummary): Array<{ name: string; value: number }> => {
   return Object.entries(summary.byTeam)
     .sort((a, b) => b[1] - a[1])
     .map(([team, count]) => ({
-      team,
-      hired: count,
+      name: team,
+      value: count,
     }));
 };
 
-export function ResultsModal({ summary, onClose }: ResultsModalProps) {
-  const pipelineData = getPipelineData(summary);
-  const rejectReasonsData = getRejectReasonsData(summary);
-  const levelDistributionData = getLevelDistributionData(summary);
-  const byTeamData = getByTeamData(summary);
+export const ResultsModal = React.memo(function ResultsModal({ summary, onClose }: ResultsModalProps) {
+  const pipelineData = useMemo(() => getPipelineData(summary), [summary]);
+  const rejectReasonsData = useMemo(() => getRejectReasonsData(summary), [summary]);
+  const levelDistributionData = useMemo(() => getLevelDistributionData(summary), [summary]);
+  const byTeamData = useMemo(() => getByTeamData(summary), [summary]);
 
   const dateRangeStr = `${formatDate(summary.dateRange.start)} - ${formatDate(
     summary.dateRange.end
   )}`;
 
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only close if clicking the overlay itself, not the modal content
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" onClick={handleOverlayClick}>
       {/* Modal Container */}
-      <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col" aria-labelledby="modal-title">
         {/* Header */}
         <div className="flex justify-between items-start p-6 border-b border-gray-200">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Hiring Analytics</h2>
+            <h2 id="modal-title" className="text-2xl font-bold text-gray-900">Hiring Analytics</h2>
             <p className="text-sm text-gray-600 mt-1">
               {dateRangeStr}
               {summary.team && <span> • Team: {summary.team}</span>}
@@ -184,7 +195,7 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Pipeline Progression
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <FunnelChart>
                   <Tooltip
                     contentStyle={{
@@ -220,11 +231,11 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Rejection Reasons
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart data={rejectReasonsData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis
-                    dataKey="reason"
+                    dataKey="name"
                     tick={{ fontSize: 12 }}
                     angle={-45}
                     textAnchor="end"
@@ -239,7 +250,7 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
                     }}
                   />
                   <Bar
-                    dataKey="count"
+                    dataKey="value"
                     fill={COLORS.danger}
                     radius={[8, 8, 0, 0]}
                   />
@@ -252,10 +263,10 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Level Distribution
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart data={levelDistributionData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="level" tick={{ fontSize: 12 }} />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip
                     contentStyle={{
@@ -265,7 +276,7 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
                     }}
                   />
                   <Bar
-                    dataKey="count"
+                    dataKey="value"
                     fill={COLORS.info}
                     radius={[8, 8, 0, 0]}
                   />
@@ -278,10 +289,10 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Hires by Team
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart data={byTeamData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="team" tick={{ fontSize: 12 }} />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip
                     contentStyle={{
@@ -291,7 +302,7 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
                     }}
                   />
                   <Bar
-                    dataKey="hired"
+                    dataKey="value"
                     fill={COLORS.success}
                     radius={[8, 8, 0, 0]}
                   />
@@ -345,4 +356,4 @@ export function ResultsModal({ summary, onClose }: ResultsModalProps) {
       </div>
     </div>
   );
-}
+});
