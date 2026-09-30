@@ -51,11 +51,11 @@ export function CurrentOpeningsTab({
       </div>
 
       {/* Action Bar */}
-      <div className="flex gap-4 mt-8">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium">
+      <div className="flex flex-col sm:flex-row gap-3 mt-8">
+        <button className="px-4 py-3 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium min-h-[44px] sm:min-h-fit">
           📥 Export CSV
         </button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium">
+        <button className="px-4 py-3 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium min-h-[44px] sm:min-h-fit">
           📄 Export PDF
         </button>
       </div>

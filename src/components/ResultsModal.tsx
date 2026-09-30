@@ -153,9 +153,9 @@ export const ResultsModal = React.memo(function ResultsModal({ summary, onClose 
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" onClick={handleOverlayClick}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4" role="dialog" aria-modal="true" onClick={handleOverlayClick}>
       {/* Modal Container */}
-      <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col" aria-labelledby="modal-title">
+      <div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl sm:max-w-4xl lg:max-w-6xl max-h-[90vh] flex flex-col" aria-labelledby="modal-title">
         {/* Header */}
         <div className="flex justify-between items-start p-6 border-b border-gray-200">
           <div>
@@ -366,24 +366,24 @@ export const ResultsModal = React.memo(function ResultsModal({ summary, onClose 
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50">
+        <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+            className="px-6 py-3 sm:py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium min-h-[44px] sm:min-h-fit"
           >
             Close
           </button>
           <button
             onClick={handleExportCSV}
             disabled={isExporting}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-6 py-3 sm:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px] sm:min-h-fit"
           >
             {isExporting ? '⏳' : '📊'} Export CSV
           </button>
           <button
             onClick={handleExportPDF}
             disabled={isExporting}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-6 py-3 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px] sm:min-h-fit"
           >
             {isExporting ? '⏳' : '📄'} Export PDF
           </button>

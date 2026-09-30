@@ -75,7 +75,7 @@ export function HistoricalTabQueryForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-md p-6 mb-6"
+      className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6"
     >
       <h3 className="text-lg font-bold text-gray-900 mb-6">Query Historical Data</h3>
 
@@ -95,7 +95,7 @@ export function HistoricalTabQueryForm({
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full px-3 sm:px-4 py-3 sm:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base ${
                 errors.startDate
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300'
@@ -119,7 +119,7 @@ export function HistoricalTabQueryForm({
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full px-3 sm:px-4 py-3 sm:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base ${
                 errors.endDate
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300'
@@ -150,7 +150,7 @@ export function HistoricalTabQueryForm({
               id="team"
               value={team}
               onChange={(e) => setTeam(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
             >
               {TEAMS.map((t) => (
                 <option key={t} value={t}>
@@ -174,16 +174,16 @@ export function HistoricalTabQueryForm({
               value={position}
               onChange={(e) => setPosition(e.target.value)}
               placeholder="e.g., Senior Engineer, Product Manager"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
             />
           </div>
         </div>
 
         {/* Submit Button */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+            className="px-6 py-3 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium min-h-[44px] sm:min-h-fit"
           >
             🔍 Search
           </button>
@@ -196,7 +196,7 @@ export function HistoricalTabQueryForm({
               setPosition('');
               setErrors({});
             }}
-            className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+            className="px-6 py-3 sm:py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium min-h-[44px] sm:min-h-fit"
           >
             Clear
           </button>
