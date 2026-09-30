@@ -106,6 +106,9 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
   const [selectedLevels, setSelectedLevels] = useState<Set<string>>(
     new Set(['1.1', '1.2', '1.3', '2.1', '2.2', '2.3'])
   );
+  const [selectedPriorities, setSelectedPriorities] = useState<Set<string>>(
+    new Set(['P1', 'P2', 'P3'])
+  );
 
   // Filter summary based on selected teams and levels
   const filteredSummary = useMemo(() => {
@@ -189,8 +192,10 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
           <FilterBar
             selectedTeams={selectedTeams}
             selectedLevels={selectedLevels}
+            selectedPriorities={selectedPriorities}
             onTeamsChange={setSelectedTeams}
             onLevelsChange={setSelectedLevels}
+            onPrioritiesChange={setSelectedPriorities}
           />
 
           {/* Summary Metrics - 5 Cards */}

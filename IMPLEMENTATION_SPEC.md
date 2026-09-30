@@ -220,9 +220,44 @@ Funnel chart showing:
 
 ---
 
+### 7. Historical Data Analytics Bug Fix ✅
+
+**Location:** `/src/components/HistoricalAnalyticsPage.tsx`
+
+**Issue:** 
+- Blank white screen when clicking "Search" on Historical Data tab
+- FilterBar component received missing `selectedPriorities` and `onPrioritiesChange` props
+- This caused FilterDropdown for Priority to receive undefined, throwing "Cannot read properties of undefined (reading 'size')" error
+
+**Fix:**
+- Added `selectedPriorities` state initialization: `new Set(['P1', 'P2', 'P3'])`
+- Added `onPrioritiesChange` state setter
+- Passed both props to FilterBar component
+
+**Result:** Historical Data search now displays analytics correctly with filter dropdowns
+
+---
+
+### 8. Mock Data Update - Offer Acceptance Simulation
+
+**Location:** `/src/data/mockData.ts` (sep_all summary)
+
+**Changes:**
+- Updated offer metrics for September historical data:
+  - `offers`: 16 → 14
+  - `onboardedCount`: 8 → 10
+  - `totalHired`: 8 → 10
+  - `offerAcceptanceRate`: 50% → 71%
+
+**Purpose:** Simulate realistic offer acceptance scenario (10 out of 14 offers accepted)
+
+**Note:** UI displays calculated values from Position data aggregation, not direct mockData values. Actual display shows onboardedCount sum of all positions = 14.
+
+---
+
 ## Commit Reference
 
-**Commit ID:** b444013  
+**Commit ID:** (New)
 **Branch:** master  
 **Date:** 2026-10-01
 

@@ -1204,14 +1204,14 @@ export const mockHiringSummaries: Record<string, HiringSummary> = {
   },
   'sep_all': {
     dateRange: { start: '2026-09-01', end: '2026-09-30' },
-    totalHired: 8,
+    totalHired: 10,
     salaryRange: '$48K-$125K',
     hcTotal: 25,
-    pipeline: { cv: 145, firstInterview: 55, secondInterview: 20, offers: 16 },
+    pipeline: { cv: 145, firstInterview: 55, secondInterview: 20, offers: 14 },
     timeToFill: 19,
-    offerAcceptanceRate: 50,
-    offersCount: 16,
-    onboardedCount: 8,
+    offerAcceptanceRate: 71,
+    offersCount: 14,
+    onboardedCount: 10,
     rejectReasons: {
       byStage: {
         cv: {
