@@ -1,4 +1,4 @@
-import { Position } from '../types';
+import type { Position } from '../types';
 import { Badge } from './Badge';
 
 interface PositionRowProps {

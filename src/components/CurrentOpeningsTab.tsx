@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Position } from '../types';
+import type { Position } from '../types';
 import { TeamFilter } from './TeamFilter';
 import { SummaryCards } from './SummaryCards';
 import { PositionAccordion } from './PositionAccordion';

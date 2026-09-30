@@ -7,3 +7,4 @@ export { SummaryCards } from './SummaryCards';
 export { PositionRow } from './PositionRow';
 export { PositionAccordion } from './PositionAccordion';
 export { CurrentOpeningsTab } from './CurrentOpeningsTab';
+export { HistoricalTabQueryForm } from './HistoricalTabQueryForm';

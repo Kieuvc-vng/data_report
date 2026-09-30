@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Position } from '../types';
+import type { Position } from '../types';
 import { PositionRow } from './PositionRow';
 import clsx from 'clsx';
 
