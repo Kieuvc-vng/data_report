@@ -30,7 +30,7 @@ export const FilterDropdown = React.memo(function FilterDropdown({
   const handleOptionClick = (option: string) => {
     const newSelected = new Set(selectedItems);
 
-    if (option === 'All' || option === options[0]) {
+    if (option === 'All') {
       // Clicking "All" toggles selecting all items
       if (newSelected.size === options.length) {
         newSelected.clear();

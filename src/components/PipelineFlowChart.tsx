@@ -96,7 +96,7 @@ export const PipelineFlowChart = React.memo(function PipelineFlowChart({
   }, [summary]);
 
   const maxCount = Math.max(...flowData.map(s => s.count));
-  const scale = 200 / maxCount; // Max width 200px
+  const scale = maxCount > 0 ? 200 / maxCount : 0; // Prevent division by zero
 
   return (
     <div ref={chartRef} className="bg-white border border-gray-200 rounded-lg p-6">
@@ -106,7 +106,6 @@ export const PipelineFlowChart = React.memo(function PipelineFlowChart({
 
       <div className="space-y-0">
         {flowData.map((stage, index) => {
-          const width = Math.max(stage.count * scale, 80);
           const nextCount = index < flowData.length - 1 ? flowData[index + 1].count : 0;
           const dropCount = stage.count - nextCount;
 
@@ -115,8 +114,11 @@ export const PipelineFlowChart = React.memo(function PipelineFlowChart({
 
           // Calculate conversion rate
           const prevStageCount = index === 0 ? summary.pipeline.cv : index === 1 ? summary.pipeline.firstInterview : index === 2 ? summary.pipeline.secondInterview : index === 3 ? summary.offersCount : 0;
-          const conversionRate = prevStageCount > 0 ? Math.round((stage.count / prevStageCount) * 100) : 100;
-          const baselineRate = index === 0 ? 100 : Math.round((stage.count / summary.pipeline.cv) * 100);
+          const conversionRate = prevStageCount > 0 ? Math.round((stage.count / prevStageCount) * 100) : 0;
+          const baselineRate = summary.pipeline.cv > 0 ? (index === 0 ? 100 : Math.round((stage.count / summary.pipeline.cv) * 100)) : 0;
+
+          // Scale bar based on percentage of baseline (0-100% → 0-200px)
+          const width = baselineRate > 0 ? (baselineRate / 100) * 200 : 0;
 
           return (
             <div key={stage.name}>
@@ -130,12 +132,14 @@ export const PipelineFlowChart = React.memo(function PipelineFlowChart({
 
                 {/* Bar visualization */}
                 <div className="flex-1">
-                  <div
-                    className="bg-blue-500 rounded px-3 py-2 text-white text-sm font-semibold"
-                    style={{ width: `${width}px` }}
-                  >
-                    {stage.count}
-                  </div>
+                  {width > 0 && (
+                    <div
+                      className="bg-blue-500 rounded px-3 py-2 text-white text-sm font-semibold"
+                      style={{ width: `${width}px` }}
+                    >
+                      {stage.count}
+                    </div>
+                  )}
                 </div>
 
                 {/* Metrics on the right */}
@@ -265,15 +269,6 @@ export const PipelineFlowChart = React.memo(function PipelineFlowChart({
         })}
       </div>
 
-      {/* Candidate Withdrawn section */}
-      {summary.rejectReasons.candidateWithdrawn > 0 && (
-        <div className="mt-6 border-t pt-4">
-          <div className="text-sm text-gray-700">
-            <span className="font-semibold">Candidate Withdrawn (Overall):</span>{' '}
-            <span className="text-gray-900 font-bold">{summary.rejectReasons.candidateWithdrawn}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 });

@@ -82,8 +82,8 @@ export default defineConfig({
 
   server: {
     // Development server configuration
-    port: 5174,
-    strictPort: false,
+    port: 5175,
+    strictPort: true,
   },
 
   preview: {

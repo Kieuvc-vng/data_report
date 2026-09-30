@@ -13,6 +13,8 @@ import {
 } from 'recharts';
 import type { HiringSummary } from '../types';
 import { exportToCSV, exportToPDF, generateFilename } from '../utils';
+import { filterSummaryByTeamsAndLevels } from '../utils/dataTransformUtils';
+import { mockPositions } from '../data/mockData';
 import { Header } from './Header';
 import { FilterBar } from './FilterBar';
 import { RejectionPopover } from './RejectionPopover';
@@ -105,8 +107,13 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
     new Set(['1.1', '1.2', '1.3', '2.1', '2.2', '2.3'])
   );
 
-  const pipelineData = useMemo(() => getPipelineData(summary), [summary]);
-  const rejectReasonsData = useMemo(() => getRejectReasonsData(summary), [summary]);
+  // Filter summary based on selected teams and levels
+  const filteredSummary = useMemo(() => {
+    return filterSummaryByTeamsAndLevels(mockPositions, selectedTeams, selectedLevels, summary);
+  }, [selectedTeams, selectedLevels, summary]);
+
+  const pipelineData = useMemo(() => getPipelineData(filteredSummary), [filteredSummary]);
+  const rejectReasonsData = useMemo(() => getRejectReasonsData(filteredSummary), [filteredSummary]);
 
   const dateRangeStr = `${formatDate(summary.dateRange.start)} - ${formatDate(
     summary.dateRange.end
@@ -172,23 +179,6 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
             </p>
           </div>
 
-          {/* Tab navigation */}
-          {tabs && (
-            <div className="flex gap-8 border-t border-gray-200 pt-4">
-              {tabs.map((tab) => (
-                <div
-                  key={tab.id}
-                  className={`text-sm font-medium pb-4 border-b-2 transition-colors ${
-                    activeTab === tab.id
-                      ? 'text-blue-600 border-blue-600'
-                      : 'text-gray-600 border-transparent'
-                  }`}
-                >
-                  {tab.label}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </header>
 
@@ -208,39 +198,39 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
               <p className="text-sm font-semibold text-blue-600">Total Hired</p>
               <p className="text-3xl font-bold text-blue-900 mt-2">
-                {summary.totalHired}
+                {filteredSummary.totalHired}
               </p>
             </div>
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200">
               <p className="text-sm font-semibold text-green-600">CVs Received</p>
               <p className="text-3xl font-bold text-green-900 mt-2">
-                {summary.pipeline.cv}
+                {filteredSummary.pipeline.cv}
               </p>
             </div>
             <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg p-4 border border-amber-200">
               <p className="text-sm font-semibold text-amber-600">Offer Salary</p>
               <p className="text-lg font-bold text-amber-900 mt-2">
-                {summary.salaryRange}
+                {filteredSummary.totalHired > 0 ? filteredSummary.salaryRange : 'N/A'}
               </p>
             </div>
             <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg p-4 border border-cyan-200">
               <p className="text-sm font-semibold text-cyan-600">Time to Fill</p>
               <p className="text-3xl font-bold text-cyan-900 mt-2">
-                {summary.timeToFill}
+                {filteredSummary.totalHired > 0 ? filteredSummary.timeToFill : 'N/A'}
               </p>
-              <p className="text-sm text-cyan-700 mt-1">days</p>
+              {filteredSummary.totalHired > 0 && <p className="text-sm text-cyan-700 mt-1">days</p>}
             </div>
             <div className="bg-gradient-to-br from-rose-50 to-rose-100 rounded-lg p-4 border border-rose-200">
               <p className="text-sm font-semibold text-rose-600">Offer Acceptance</p>
               <p className="text-3xl font-bold text-rose-900 mt-2">
-                {summary.offerAcceptanceRate}%
+                {filteredSummary.offersCount > 0 ? `${filteredSummary.offerAcceptanceRate}%` : 'N/A'}
               </p>
-              <p className="text-sm text-rose-700 mt-1">({summary.onboardedCount}/{summary.offersCount} offers)</p>
+              {filteredSummary.offersCount > 0 && <p className="text-sm text-rose-700 mt-1">({filteredSummary.onboardedCount}/{filteredSummary.offersCount} offers)</p>}
             </div>
           </div>
 
           {/* Pipeline Flow Chart */}
-          <PipelineFlowChart summary={summary} />
+          <PipelineFlowChart summary={filteredSummary} />
 
           {/* Export buttons */}
           <div className="flex flex-col sm:flex-row justify-end gap-3 py-4">
@@ -271,7 +261,7 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
       <RejectionPopover
         isOpen={showRejectionPopover}
         onClose={() => setShowRejectionPopover(false)}
-        rejectReasons={summary.rejectReasons}
+        rejectReasons={filteredSummary.rejectReasons}
       />
     </div>
   );

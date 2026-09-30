@@ -258,3 +258,82 @@ export const recordToChartData = (
 
   return data;
 };
+
+/**
+ * Filters positions by teams and levels, then calculates aggregated summary
+ * @param positions - Array of all positions
+ * @param selectedTeams - Set of selected teams
+ * @param selectedLevels - Set of selected levels
+ * @param originalSummary - Original summary to use as base
+ * @returns Filtered HiringSummary
+ */
+export const filterSummaryByTeamsAndLevels = (
+  positions: Position[],
+  selectedTeams: Set<string>,
+  selectedLevels: Set<string>,
+  originalSummary: HiringSummary
+): HiringSummary => {
+  // Return empty summary if no teams or levels selected
+  if (selectedTeams.size === 0 || selectedLevels.size === 0) {
+    return {
+      ...originalSummary,
+      totalHired: 0,
+      hcTotal: 0,
+      pipeline: { cv: 0, firstInterview: 0, secondInterview: 0, offers: 0 },
+      offersCount: 0,
+      onboardedCount: 0,
+      timeToFill: 0,
+      offerAcceptanceRate: 0,
+    };
+  }
+
+  // Filter positions based on selected teams and levels
+  const filteredPositions = positions.filter(pos => {
+    const teamMatch = selectedTeams.has(pos.team);
+    const levelMatch = selectedLevels.has(pos.level);
+    return teamMatch && levelMatch;
+  });
+
+  if (filteredPositions.length === 0) {
+    return {
+      ...originalSummary,
+      totalHired: 0,
+      hcTotal: 0,
+      pipeline: { cv: 0, firstInterview: 0, secondInterview: 0, offers: 0 },
+      offersCount: 0,
+      onboardedCount: 0,
+      timeToFill: 0,
+      offerAcceptanceRate: 0,
+    };
+  }
+
+  // Calculate aggregated metrics from filtered positions
+  const totalCVs = filteredPositions.reduce((sum, p) => sum + p.pipeline.cv, 0);
+  const totalFirstInterview = filteredPositions.reduce((sum, p) => sum + p.pipeline.firstInterview, 0);
+  const totalSecondInterview = filteredPositions.reduce((sum, p) => sum + p.pipeline.secondInterview, 0);
+  const totalOffers = filteredPositions.reduce((sum, p) => sum + p.pipeline.offers, 0);
+  const totalOnboarded = filteredPositions.reduce((sum, p) => sum + p.onboardedCount, 0);
+  const totalHC = filteredPositions.reduce((sum, p) => sum + p.hc, 0);
+  const avgFillTime = Math.round(
+    filteredPositions.reduce((sum, p) => sum + p.estimatedFillDays, 0) / filteredPositions.length
+  );
+
+  return {
+    ...originalSummary,
+    totalHired: totalOnboarded,
+    hcTotal: totalHC,
+    pipeline: {
+      cv: totalCVs,
+      firstInterview: totalFirstInterview,
+      secondInterview: totalSecondInterview,
+      offers: totalOffers,
+    },
+    offersCount: totalOffers,
+    onboardedCount: totalOnboarded,
+    timeToFill: avgFillTime,
+    offerAcceptanceRate:
+      totalOffers > 0
+        ? Math.round((totalOnboarded / totalOffers) * 100)
+        : 0,
+  };
+};
