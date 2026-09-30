@@ -6,3 +6,4 @@ export { TeamFilter } from './TeamFilter';
 export { SummaryCards } from './SummaryCards';
 export { PositionRow } from './PositionRow';
 export { PositionAccordion } from './PositionAccordion';
+export { CurrentOpeningsTab } from './CurrentOpeningsTab';

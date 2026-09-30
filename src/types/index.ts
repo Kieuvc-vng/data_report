@@ -1,4 +1,4 @@
-﻿export interface Position {
+export interface Position {
   id: string
   team: 'PEN' | 'GDS' | 'GIO' | 'PRO' | 'PIN'
   title: string

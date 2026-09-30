@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { TabNavigation } from './components/TabNavigation';
-import { TeamFilter } from './components/TeamFilter';
-import { SummaryCards } from './components/SummaryCards';
+import { CurrentOpeningsTab } from './components/CurrentOpeningsTab';
 import { useAuthStore } from './stores/authStore';
 import { useHiringStore } from './stores/hiringStore';
-import { useSummaryMetrics } from './hooks/useSummaryMetrics';
 import { mockPositions, mockCandidates } from './data/mockData';
 
 function App() {
@@ -16,7 +14,6 @@ function App() {
   const hiringStore = useHiringStore();
   const authStore = useAuthStore();
   const positions = hiringStore.positions;
-  const metrics = useSummaryMetrics(positions, activeTeam === 'All Teams' ? undefined : activeTeam);
 
   // Set mock data on mount (in Phase 2, this will be from API)
   React.useEffect(() => {
@@ -31,14 +28,11 @@ function App() {
       id: 'current',
       label: 'Current Opening Positions',
       content: (
-        <div>
-          <TeamFilter activeTeam={activeTeam} onTeamChange={setActiveTeam} />
-          <SummaryCards {...metrics} />
-          <div className="bg-white rounded-lg shadow p-8">
-            <h3 className="text-xl font-bold mb-2">Positions for {activeTeam}</h3>
-            <p className="text-gray-600">Positions content coming in Task 10+</p>
-          </div>
-        </div>
+        <CurrentOpeningsTab
+          positions={positions}
+          activeTeam={activeTeam}
+          onTeamChange={setActiveTeam}
+        />
       ),
     },
     {
