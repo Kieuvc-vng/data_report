@@ -82,8 +82,8 @@ export default defineConfig({
 
   server: {
     // Development server configuration
-    port: 5175,
-    strictPort: true,
+    port: parseInt(process.env.PORT || '5175', 10),
+    strictPort: false,
   },
 
   preview: {

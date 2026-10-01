@@ -17,12 +17,28 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 5, insufficientExp: 2, other: 1 },
-        firstInterview: { skillsMismatch: 3, compensationMismatch: 1 },
-        secondInterview: { location: 1 },
+        cv: { skillsMismatch: 5, insufficientExp: 2, overqualified: 3, other: 2 },
+        firstInterview: { skillsMismatch: 3, compensationMismatch: 1, location: 1 },
+        secondInterview: { background: 1 },
       },
-      candidateWithdrawn: 2,
+      candidateWithdrawn: 1,
     },
+    topIndustries: [
+      { name: 'Technology', count: 7 },
+      { name: 'Finance', count: 5 },
+      { name: 'Consulting', count: 3 },
+      { name: 'E-commerce', count: 2 },
+      { name: 'Healthcare', count: 3 },
+    ],
+    topCompanies: [
+      { name: 'Google', count: 4 },
+      { name: 'Meta', count: 3 },
+      { name: 'Microsoft', count: 3 },
+      { name: 'Apple', count: 2 },
+      { name: 'Amazon', count: 2 },
+      { name: 'Netflix', count: 2 },
+      { name: 'Stripe', count: 2 },
+    ],
     createdDate: '2026-08-15',
     estimatedFillDays: 20,
     onboardedCount: 1,
@@ -41,10 +57,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 15, firstInterview: 5, secondInterview: 2, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 3, insufficientExp: 2 },
-        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+        cv: { skillsMismatch: 3, insufficientExp: 2, overqualified: 3, other: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+        secondInterview: { background: 1, positionClosed: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-20',
     estimatedFillDays: 18,
@@ -64,11 +81,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 25, firstInterview: 10, secondInterview: 3, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 6, insufficientExp: 3, compensationMismatch: 1 },
-        firstInterview: { skillsMismatch: 4, language: 1, other: 1 },
-        secondInterview: { location: 1 },
+        cv: { skillsMismatch: 6, insufficientExp: 3, overqualified: 2, other: 4 },
+        firstInterview: { skillsMismatch: 4, language: 1, location: 2 },
+        secondInterview: { background: 1, positionClosed: 1 },
       },
-      candidateWithdrawn: 2,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-10',
     estimatedFillDays: 22,
@@ -88,10 +105,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 12, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 4, insufficientExp: 1, other: 1 },
-        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+        cv: { skillsMismatch: 4, insufficientExp: 1, overqualified: 2, other: 1 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+        secondInterview: { background: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-09-01',
     estimatedFillDays: 15,
@@ -111,10 +129,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 18, firstInterview: 7, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 4, insufficientExp: 2, other: 1 },
-        firstInterview: { skillsMismatch: 3, language: 1 },
+        cv: { skillsMismatch: 4, insufficientExp: 2, overqualified: 2, other: 3 },
+        firstInterview: { skillsMismatch: 3, language: 2 },
+        secondInterview: { compensationMismatch: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-25',
     estimatedFillDays: 16,
@@ -134,8 +153,9 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 8, firstInterview: 3, secondInterview: 1, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 2, insufficientExp: 1 },
+        cv: { skillsMismatch: 2, insufficientExp: 1, overqualified: 2 },
         firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+        secondInterview: { background: 1 },
       },
       candidateWithdrawn: 0,
     },
@@ -157,10 +177,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 6, firstInterview: 2, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 1, insufficientExp: 1 },
-        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+        cv: { skillsMismatch: 1, insufficientExp: 1, overqualified: 2 },
+        firstInterview: { skillsMismatch: 1 },
+        secondInterview: { positionClosed: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-09-05',
     estimatedFillDays: 25,
@@ -180,10 +201,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 30, firstInterview: 12, secondInterview: 4, offers: 2 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 8, insufficientExp: 5 },
-        firstInterview: { skillsMismatch: 4, other: 2 },
+        cv: { skillsMismatch: 8, insufficientExp: 5, other: 5 },
+        firstInterview: { skillsMismatch: 4, compensationMismatch: 2, location: 2 },
+        secondInterview: { background: 1, notProgressedInTime: 1 },
       },
-      candidateWithdrawn: 2,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-30',
     estimatedFillDays: 14,
@@ -205,10 +227,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 14, firstInterview: 6, secondInterview: 2, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 4, insufficientExp: 2 },
-        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+        cv: { skillsMismatch: 4, insufficientExp: 2, other: 2 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+        secondInterview: { background: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-18',
     estimatedFillDays: 19,
@@ -228,11 +251,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 22, firstInterview: 9, secondInterview: 3, offers: 1 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 6, insufficientExp: 3 },
-        firstInterview: { skillsMismatch: 3, language: 1, compensationMismatch: 1 },
-        secondInterview: { location: 1 },
+        cv: { skillsMismatch: 6, insufficientExp: 3, other: 4 },
+        firstInterview: { skillsMismatch: 3, language: 1, compensationMismatch: 2 },
+        secondInterview: { location: 1, background: 1 },
       },
-      candidateWithdrawn: 2,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-22',
     estimatedFillDays: 17,
@@ -252,8 +275,9 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 10, firstInterview: 4, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 2, insufficientExp: 1, other: 1 },
-        firstInterview: { skillsMismatch: 2, compensationMismatch: 2 },
+        cv: { skillsMismatch: 2, insufficientExp: 1, other: 3 },
+        firstInterview: { skillsMismatch: 2, compensationMismatch: 1 },
+        secondInterview: { background: 1 },
       },
       candidateWithdrawn: 0,
     },
@@ -275,10 +299,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 7, firstInterview: 3, secondInterview: 1, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 2, insufficientExp: 1 },
-        firstInterview: { skillsMismatch: 1, compensationMismatch: 2 },
+        cv: { skillsMismatch: 2, insufficientExp: 1, other: 1 },
+        firstInterview: { skillsMismatch: 1, compensationMismatch: 1 },
+        secondInterview: { positionClosed: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-08-28',
     estimatedFillDays: 20,
@@ -298,10 +323,11 @@ export const mockPositions: Position[] = [
     pipeline: { cv: 16, firstInterview: 6, secondInterview: 2, offers: 0 },
     rejectReasons: {
       byStage: {
-        cv: { skillsMismatch: 4, insufficientExp: 2 },
+        cv: { skillsMismatch: 4, insufficientExp: 2, other: 4 },
         firstInterview: { skillsMismatch: 2, compensationMismatch: 1, other: 1 },
+        secondInterview: { background: 1, notProgressedInTime: 1 },
       },
-      candidateWithdrawn: 1,
+      candidateWithdrawn: 0,
     },
     createdDate: '2026-09-03',
     estimatedFillDays: 18,

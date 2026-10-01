@@ -26,6 +26,8 @@ export interface Position {
     }
     candidateWithdrawn: number
   }
+  topIndustries?: Array<{ name: string; count: number }>
+  topCompanies?: Array<{ name: string; count: number }>
   createdDate: string
   estimatedFillDays: number
   onboardedCount: number

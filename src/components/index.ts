@@ -11,3 +11,6 @@ export { HistoricalTabQueryForm } from './HistoricalTabQueryForm';
 export { HistoricalAnalyticsPage } from './HistoricalAnalyticsPage';
 export { FilterDropdown } from './FilterDropdown';
 export { FilterBar } from './FilterBar';
+export { PipelineFlowChart } from './PipelineFlowChart';
+export { PipelineVisualizationTabs } from './PipelineVisualizationTabs';
+export { PositionPipelineVisualization } from './PositionPipelineVisualization';

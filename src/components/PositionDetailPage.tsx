@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import type { Position } from '../types';
 import { useHiringStore } from '../stores/hiringStore';
 import { Badge } from './Badge';
+import { PositionPipelineVisualization } from './PositionPipelineVisualization';
 
 export function PositionDetailPage() {
   const { jobCode } = useParams<{ jobCode: string }>();
@@ -162,154 +163,87 @@ export function PositionDetailPage() {
           </div>
         </div>
 
-        {/* Pipeline Section */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">PIPELINE</h2>
-          <div className="bg-gray-50 rounded-lg p-6">
-            <p className="text-sm font-medium text-gray-700 mb-4">📊 [Funnel Chart]</p>
-
-            <div className="space-y-4">
-              {/* CV to 1st */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">CV → 1st Interview</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {position.pipeline.cv} → {position.pipeline.firstInterview} (
-                    {Math.round(
-                      ((position.pipeline.cv - position.pipeline.firstInterview) /
-                        position.pipeline.cv) *
-                        100
-                    )}
-                    % drop)
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-blue-500 h-2 rounded-full"
-                    style={{
-                      width: `${(position.pipeline.firstInterview / position.pipeline.cv) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* 1st to 2nd */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">1st → 2nd Interview</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {position.pipeline.firstInterview} → {position.pipeline.secondInterview} (
-                    {Math.round(
-                      ((position.pipeline.firstInterview - position.pipeline.secondInterview) /
-                        position.pipeline.firstInterview) *
-                        100
-                    )}
-                    % drop)
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-green-500 h-2 rounded-full"
-                    style={{
-                      width: `${(position.pipeline.secondInterview / position.pipeline.firstInterview) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* 2nd to Offer */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">2nd → Offer</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {position.pipeline.secondInterview} → {position.pipeline.offers} (
-                    {Math.round(
-                      ((position.pipeline.secondInterview - position.pipeline.offers) /
-                        position.pipeline.secondInterview) *
-                        100
-                    )}
-                    % drop)
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-orange-500 h-2 rounded-full"
-                    style={{
-                      width: `${(position.pipeline.offers / position.pipeline.secondInterview) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Pipeline Visualization with Tabs */}
+        <div className="mb-6">
+          <PositionPipelineVisualization position={position} />
         </div>
 
-        {/* Reject Reasons */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">REJECT REASONS</h2>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm font-medium text-gray-700 mb-4">📊 [Horizontal Bar Chart]</p>
-
-            <div className="space-y-3">
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">Not fit skills</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {rejectReasonPercentages.notFitSkills}%
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-red-500 h-2 rounded-full"
-                    style={{ width: `${rejectReasonPercentages.notFitSkills}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">Low experience</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {rejectReasonPercentages.lowExp}%
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-yellow-500 h-2 rounded-full"
-                    style={{ width: `${rejectReasonPercentages.lowExp}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">Salary mismatch</span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {rejectReasonPercentages.salaryMismatch}%
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-orange-500 h-2 rounded-full"
-                    style={{ width: `${rejectReasonPercentages.salaryMismatch}%` }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Candidate Insights */}
+{/* Candidate Insights */}
         <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">CANDIDATE INSIGHTS</h2>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm text-gray-700 mb-2">
-              <span className="font-medium">Top industries:</span> Tech, Finance, Consulting
-            </p>
-            <p className="text-sm text-gray-700">
-              <span className="font-medium">Top companies:</span> Google, Meta, Microsoft, Apple,
-              Amazon
-            </p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">CANDIDATE INSIGHTS</h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Top Industries */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">Industry</h3>
+              <p className="text-xs text-gray-500 mb-4">Active pipeline · all time</p>
+
+              <div className="space-y-3">
+                {position.topIndustries && position.topIndustries.length > 0 ? (
+                  position.topIndustries.map((industry, idx) => {
+                    const total = position.topIndustries?.reduce((sum, ind) => sum + ind.count, 0) || 1;
+                    const percentage = Math.round((industry.count / total) * 100);
+                    return (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-gray-900 mb-1">{industry.name}</p>
+                          <div className="flex items-center gap-2 h-5">
+                            <div className="flex-1 bg-gray-200 rounded h-2 overflow-hidden">
+                              <div
+                                className="bg-orange-400 h-full"
+                                style={{ width: `${percentage}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0 w-16">
+                          <p className="text-sm font-semibold text-gray-900">{industry.count}</p>
+                          <p className="text-xs text-gray-500">{percentage}%</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm text-gray-600">No industry data available</p>
+                )}
+              </div>
+            </div>
+
+            {/* Top Companies */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
+              <p className="text-xs text-gray-500 mb-4">Active pipeline · all time</p>
+
+              <div className="space-y-3">
+                {position.topCompanies && position.topCompanies.length > 0 ? (
+                  position.topCompanies.map((company, idx) => {
+                    const total = position.topCompanies?.reduce((sum, comp) => sum + comp.count, 0) || 1;
+                    const percentage = Math.round((company.count / total) * 100);
+                    return (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-gray-900 mb-1">{company.name}</p>
+                          <div className="flex items-center gap-2 h-5">
+                            <div className="flex-1 bg-gray-200 rounded h-2 overflow-hidden">
+                              <div
+                                className="bg-blue-400 h-full"
+                                style={{ width: `${percentage}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0 w-16">
+                          <p className="text-sm font-semibold text-gray-900">{company.count}</p>
+                          <p className="text-xs text-gray-500">{percentage}%</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm text-gray-600">No company data available</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
