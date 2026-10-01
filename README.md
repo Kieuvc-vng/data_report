@@ -12,6 +12,10 @@ A modern, data-driven hiring analytics platform built with React 19, TypeScript,
     - Shows drop counts between stages with detailed rejection reason popover
     - Offer stage breakdown: Candidate Declined (with sub-reasons) + Company Withdrew
   - Rejection Reasons Analysis: Detailed breakdown by pipeline stage and candidate withdrawal tracking
+- **Position Detail Page**: Comprehensive view of individual job positions with pipeline visualization and candidate insights
+  - **Pipeline Visualization**: Dual-view pipeline (Kanban & Funnel) showing candidate progression through recruitment stages
+  - **Rejection Analysis**: Interactive popover displays detailed rejection reasons at each stage transition
+  - **Candidate Insights**: Industry and company distribution charts with count and percentage metrics
 - **Advanced Filtering**: Multi-select team and level filters with intelligent display logic
 - **Rejection Tracking**: Detailed rejection popover with hierarchical breakdown by pipeline stage
 - **CSV Export**: Download hiring summary data in CSV format with proper formatting
@@ -94,6 +98,9 @@ Export hiring summaries to CSV format for spreadsheet analysis. Generate profess
 | **FilterBar** | Multi-select filter container for team and level selection |
 | **FilterDropdown** | Reusable dropdown component with multi-select and smart label display |
 | **PipelineFlowChart** | Unified 5-stage pipeline visualization with drop indicators and rejection analysis |
+| **PositionDetailPage** | Individual job position detail view with key metrics and pipeline visualization |
+| **PositionPipelineVisualization** | Dual-view pipeline component with Kanban (8 stages) and Funnel (5 stages) views |
+| **PipelineVisualizationTabs** | Tab navigation between Kanban and Funnel visualization modes |
 | **RejectionPopover** | Modal component displaying detailed rejection breakdown by pipeline stage |
 | **ResultsModal** | Legacy modal component (deprecated - replaced by HistoricalAnalyticsPage) |
 | **SummaryCards** | Summary metric cards displaying key KPIs and statistics |
