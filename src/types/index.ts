@@ -29,6 +29,8 @@ export interface Position {
   }
   topIndustries?: Array<{ name: string; count: number }>
   topCompanies?: Array<{ name: string; count: number }>
+  topEducationBackground?: Array<{ name: string; count: number }>
+  topSource?: Array<{ name: string; count: number }>
   createdDate: string
   estimatedFillDays: number
   onboardedCount: number
@@ -68,6 +70,10 @@ export interface HiringSummary {
     allReasons: Record<string, number>
     candidateWithdrawn: number
   }
+  topIndustries?: Array<{ name: string; count: number }>
+  topCompanies?: Array<{ name: string; count: number }>
+  topEducationBackground?: Array<{ name: string; count: number }>
+  topSource?: Array<{ name: string; count: number }>
 }
 
 export type UserRole = 'hrbp' | 'head_of_ta'

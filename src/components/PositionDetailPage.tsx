@@ -4,6 +4,7 @@ import type { Position } from '../types';
 import { useHiringStore } from '../stores/hiringStore';
 import { Badge } from './Badge';
 import { PositionPipelineVisualization } from './PositionPipelineVisualization';
+import { DonutChart } from './DonutChart';
 
 export function PositionDetailPage() {
   const { jobCode } = useParams<{ jobCode: string }>();
@@ -241,6 +242,38 @@ export function PositionDetailPage() {
                   })
                 ) : (
                   <p className="text-sm text-gray-600">No company data available</p>
+                )}
+              </div>
+            </div>
+
+            {/* Education Background */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <div className="flex flex-col items-center">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">Education Background</h3>
+                <p className="text-xs text-gray-500 mb-6">Active pipeline · all time</p>
+                {position.topEducationBackground && position.topEducationBackground.length > 0 ? (
+                  <DonutChart
+                    data={position.topEducationBackground}
+                    colors={['#a78bfa', '#c4b5fd', '#ddd6fe', '#ede9fe']}
+                  />
+                ) : (
+                  <p className="text-sm text-gray-600">No education data available</p>
+                )}
+              </div>
+            </div>
+
+            {/* Source */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <div className="flex flex-col items-center">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">Source</h3>
+                <p className="text-xs text-gray-500 mb-6">Active pipeline · all time</p>
+                {position.topSource && position.topSource.length > 0 ? (
+                  <DonutChart
+                    data={position.topSource}
+                    colors={['#4ade80', '#86efac', '#bbf7d0', '#dcfce7']}
+                  />
+                ) : (
+                  <p className="text-sm text-gray-600">No source data available</p>
                 )}
               </div>
             </div>

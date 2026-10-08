@@ -14,3 +14,4 @@ export { FilterBar } from './FilterBar';
 export { PipelineFlowChart } from './PipelineFlowChart';
 export { PipelineVisualizationTabs } from './PipelineVisualizationTabs';
 export { PositionPipelineVisualization } from './PositionPipelineVisualization';
+export { DonutChart } from './DonutChart';

@@ -18,6 +18,7 @@ import { mockPositions } from '../data/mockData';
 import { Header } from './Header';
 import { RejectionPopover } from './RejectionPopover';
 import { PipelineFlowChart } from './PipelineFlowChart';
+import { DonutChart } from './DonutChart';
 import { BUSINESS_UNITS } from '../constants/businessUnits';
 
 interface HistoricalAnalyticsPageProps {
@@ -300,27 +301,125 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
           {/* Pipeline Flow Chart */}
           <PipelineFlowChart summary={filteredSummary} />
 
+          {/* Candidate Insights */}
+          <div className="bg-white rounded-lg p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-gray-900 mb-6">CANDIDATE INSIGHTS</h2>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Industry */}
+              <div className="bg-gray-50 rounded-lg p-6">
+                <h3 className="text-sm font-semibold text-gray-900 mb-4">Industry</h3>
+                <p className="text-xs text-gray-500 mb-4">Hired candidates · all time</p>
+
+                <div className="space-y-3">
+                  {filteredSummary.topIndustries && filteredSummary.topIndustries.length > 0 ? (
+                    filteredSummary.topIndustries.map((industry, idx) => {
+                      const total = filteredSummary.topIndustries?.reduce((sum, ind) => sum + ind.count, 0) || 1;
+                      const percentage = Math.round((industry.count / total) * 100);
+                      return (
+                        <div key={idx} className="flex items-center gap-3">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-gray-900 mb-1">{industry.name}</p>
+                            <div className="flex items-center gap-2 h-5">
+                              <div className="flex-1 bg-gray-200 rounded h-2 overflow-hidden">
+                                <div
+                                  className="bg-orange-400 h-full"
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right flex-shrink-0 w-16">
+                            <p className="text-sm font-semibold text-gray-900">{industry.count}</p>
+                            <p className="text-xs text-gray-500">{percentage}%</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="text-sm text-gray-600">No industry data available</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Company */}
+              <div className="bg-gray-50 rounded-lg p-6">
+                <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
+                <p className="text-xs text-gray-500 mb-4">Hired candidates · all time</p>
+
+                <div className="space-y-3">
+                  {filteredSummary.topCompanies && filteredSummary.topCompanies.length > 0 ? (
+                    filteredSummary.topCompanies.map((company, idx) => {
+                      const total = filteredSummary.topCompanies?.reduce((sum, comp) => sum + comp.count, 0) || 1;
+                      const percentage = Math.round((company.count / total) * 100);
+                      return (
+                        <div key={idx} className="flex items-center gap-3">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-gray-900 mb-1">{company.name}</p>
+                            <div className="flex items-center gap-2 h-5">
+                              <div className="flex-1 bg-gray-200 rounded h-2 overflow-hidden">
+                                <div
+                                  className="bg-blue-400 h-full"
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right flex-shrink-0 w-16">
+                            <p className="text-sm font-semibold text-gray-900">{company.count}</p>
+                            <p className="text-xs text-gray-500">{percentage}%</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="text-sm text-gray-600">No company data available</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Education Background */}
+              <div className="bg-gray-50 rounded-lg p-6">
+                <div className="flex flex-col items-center">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Education Background</h3>
+                  <p className="text-xs text-gray-500 mb-6">Hired candidates · all time</p>
+                  {filteredSummary.topEducationBackground && filteredSummary.topEducationBackground.length > 0 ? (
+                    <DonutChart
+                      data={filteredSummary.topEducationBackground}
+                      colors={['#a78bfa', '#c4b5fd', '#ddd6fe', '#ede9fe']}
+                    />
+                  ) : (
+                    <p className="text-sm text-gray-600">No education data available</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Source */}
+              <div className="bg-gray-50 rounded-lg p-6">
+                <div className="flex flex-col items-center">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Source</h3>
+                  <p className="text-xs text-gray-500 mb-6">Hired candidates · all time</p>
+                  {filteredSummary.topSource && filteredSummary.topSource.length > 0 ? (
+                    <DonutChart
+                      data={filteredSummary.topSource}
+                      colors={['#4ade80', '#86efac', '#bbf7d0', '#dcfce7']}
+                    />
+                  ) : (
+                    <p className="text-sm text-gray-600">No source data available</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Export buttons */}
           <div className="flex flex-col sm:flex-row justify-end gap-3 py-4">
-            <button
-              onClick={onBack}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-            >
-              Back to Query
-            </button>
             <button
               onClick={handleExportCSV}
               disabled={isExporting}
               className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isExporting ? '⏳' : '📊'} Export CSV
-            </button>
-            <button
-              onClick={handleExportPDF}
-              disabled={isExporting}
-              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {isExporting ? '⏳' : '📄'} Export PDF
             </button>
           </div>
         </div>
