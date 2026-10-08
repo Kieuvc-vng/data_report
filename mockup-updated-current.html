@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiring Dashboard - Current Openings (Updated)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .team-item {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: #f3f4f6;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .team-item:hover {
+            background: #e5e7eb;
+        }
+
+        .team-item.active {
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+        }
+
+        .main {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6b7280;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #374151;
+        }
+
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: #1f2937;
+        }
+
+        .accordion {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .accordion-header:hover {
+            background: #f3f4f6;
+        }
+
+        .accordion-header.expanded {
+            background: #eff6ff;
+            border-bottom: 1px solid #bfdbfe;
+        }
+
+        .accordion-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .accordion-content.show {
+            display: block;
+        }
+
+        .position-row {
+            display: grid;
+            grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .position-row:last-child {
+            border-bottom: none;
+        }
+
+        .position-row:hover {
+            background: #f9fafb;
+        }
+
+        .position-title {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .position-level {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-p1 {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-p2 {
+            background: #fef08a;
+            color: #854d0e;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .tab-indicator {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 200px;
+                display: flex;
+                overflow-x: auto;
+            }
+
+            .position-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Hiring Dashboard</div>
+        <div class="user-info">
+            <span>Nguyễn Văn A (Head of TA)</span>
+            <button class="btn btn-secondary">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-title">Team Filter (Current Tab)</div>
+            <div class="team-item active">All Teams</div>
+            <div class="team-item">PEN - Platform & Engineering</div>
+            <div class="team-item">GDS - Data Solutions</div>
+            <div class="team-item">GIO - Growth & Integration</div>
+            <div class="team-item">PRO - Product</div>
+            <div class="team-item">PIN - Other</div>
+        </div>
+
+        <div class="main">
+            <div class="tabs">
+                <div class="tab active">Current Opening Positions</div>
+                <div class="tab">Historical Data</div>
+            </div>
+
+            <div class="summary-cards">
+                <div class="card">
+                    <div class="card-label">Total HC</div>
+                    <div class="card-value">25</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Priority 1</div>
+                    <div class="card-value">16</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Avg Fill Time</div>
+                    <div class="card-value">15 days</div>
+                </div>
+            </div>
+
+            <div class="section-title">Positions by Team</div>
+
+            <!-- Team Accordion 1 -->
+            <div class="accordion">
+                <div class="accordion-header expanded" onclick="toggleAccordion(this)">
+                    <span>▼ PEN — Platform & Engineering (18 positions)</span>
+                </div>
+                <div class="accordion-content show">
+                    <div class="position-row">
+                        <div>
+                            <div class="position-title">Backend 2.1</div>
+                            <div class="position-level">Senior Backend Engineer</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">2</div>
+                            <div class="stat-label">HC</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">$80K-$120K</div>
+                            <div class="stat-label">Salary</div>
+                        </div>
+                        <div class="stat">
+                            <span class="badge badge-p1">P1</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">20 → 8 → 2 → 1</div>
+                            <div class="stat-label">Pipeline</div>
+                        </div>
+                    </div>
+
+                    <div class="position-row">
+                        <div>
+                            <div class="position-title">Backend 1.3</div>
+                            <div class="position-level">Mid-level Backend Engineer</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">HC</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">$60K-$90K</div>
+                            <div class="stat-label">Salary</div>
+                        </div>
+                        <div class="stat">
+                            <span class="badge badge-p2">P2</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15 → 5 → 2 → 0</div>
+                            <div class="stat-label">Pipeline</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Accordion 2 -->
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>▶ GDS — Data Solutions (7 positions)</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="color: #6b7280;">Click to expand...</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>▶ GIO — Growth & Integration (6 positions)</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="color: #6b7280;">Click to expand...</p>
+                </div>
+            </div>
+
+            <div class="action-bar" style="margin-top: 2rem;">
+                <button class="btn btn-primary">📥 Export CSV</button>
+                <button class="btn btn-primary">📄 Export PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isExpanded = header.classList.toggle('expanded');
+            content.classList.toggle('show');
+
+            // Update arrow
+            const text = header.querySelector('span');
+            if (isExpanded) {
+                text.textContent = text.textContent.replace('▶', '▼');
+            } else {
+                text.textContent = text.textContent.replace('▼', '▶');
+            }
+        }
+    </script>
+</body>
+</html>
