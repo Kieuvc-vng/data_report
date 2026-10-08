@@ -1,6 +1,7 @@
 export interface Position {
   id: string
-  team: 'PEN' | 'GDS' | 'GIO' | 'PRO' | 'PIN'
+  department: string
+  businessUnit: string
   title: string
   level: string
   salary: string
@@ -42,12 +43,13 @@ export interface Candidate {
   salary: string
   hireDate: string
   position: string
-  team: string
+  department: string
 }
 
 export interface HiringSummary {
   dateRange: { start: string; end: string }
-  team?: string
+  department?: string
+  businessUnit?: string
   totalHired: number
   salaryRange: string
   hcTotal: number
@@ -73,5 +75,5 @@ export type UserRole = 'hrbp' | 'head_of_ta'
 export interface User {
   name: string
   role: UserRole
-  team?: string // Only for HRBP
+  department?: string // Only for HRBP
 }

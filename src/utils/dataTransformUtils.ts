@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Data Transformation Utilities
  * Provides functions for transforming data into chart-ready formats
  */
@@ -262,19 +262,19 @@ export const recordToChartData = (
 /**
  * Filters positions by teams and levels, then calculates aggregated summary
  * @param positions - Array of all positions
- * @param selectedTeams - Set of selected teams
+ * @param selectedDepts - Set of selected teams
  * @param selectedLevels - Set of selected levels
  * @param originalSummary - Original summary to use as base
  * @returns Filtered HiringSummary
  */
 export const filterSummaryByTeamsAndLevels = (
   positions: Position[],
-  selectedTeams: Set<string>,
+  selectedDepts: Set<string>,
   selectedLevels: Set<string>,
   originalSummary: HiringSummary
 ): HiringSummary => {
   // Return empty summary if no teams or levels selected
-  if (selectedTeams.size === 0 || selectedLevels.size === 0) {
+  if (selectedDepts.size === 0 || selectedLevels.size === 0) {
     return {
       ...originalSummary,
       totalHired: 0,
@@ -289,7 +289,7 @@ export const filterSummaryByTeamsAndLevels = (
 
   // Filter positions based on selected teams and levels
   const filteredPositions = positions.filter(pos => {
-    const teamMatch = selectedTeams.has(pos.team);
+    const teamMatch = selectedDepts.has(pos.department);
     const levelMatch = selectedLevels.has(pos.level);
     return teamMatch && levelMatch;
   });
@@ -337,3 +337,5 @@ export const filterSummaryByTeamsAndLevels = (
         : 0,
   };
 };
+
+

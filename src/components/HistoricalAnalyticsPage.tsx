@@ -16,16 +16,17 @@ import { exportToCSV, exportToPDF, generateFilename } from '../utils';
 import { filterSummaryByTeamsAndLevels } from '../utils/dataTransformUtils';
 import { mockPositions } from '../data/mockData';
 import { Header } from './Header';
-import { FilterBar } from './FilterBar';
 import { RejectionPopover } from './RejectionPopover';
 import { PipelineFlowChart } from './PipelineFlowChart';
+import { BUSINESS_UNITS } from '../constants/businessUnits';
 
 interface HistoricalAnalyticsPageProps {
   summary: HiringSummary;
   query: {
     startDate: string;
     endDate: string;
-    team?: string;
+    businessUnit?: string;
+    department?: string;
     position?: string;
   } | null;
   onBack: () => void;
@@ -100,6 +101,8 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
 }: HistoricalAnalyticsPageProps) {
   const [isExporting, setIsExporting] = useState(false);
   const [showRejectionPopover, setShowRejectionPopover] = useState(false);
+  const [selectedBU, setSelectedBU] = useState(query?.businessUnit || '');
+  const [selectedDept, setSelectedDept] = useState(query?.department || '');
   const [selectedTeams, setSelectedTeams] = useState<Set<string>>(
     new Set(['PEN', 'GDS', 'GIO', 'PRO', 'PIN'])
   );
@@ -110,10 +113,29 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
     new Set(['P1', 'P2', 'P3'])
   );
 
-  // Filter summary based on selected teams and levels
+  // Get available departments for selected BU
+  const selectedBUData = BUSINESS_UNITS.find((bu) => bu.code === selectedBU);
+  const availableDepts = useMemo(() => selectedBUData?.departments || [], [selectedBUData]);
+
+  // Reset department when BU changes
+  const handleBUChange = (newBU: string) => {
+    setSelectedBU(newBU);
+    setSelectedDept('');
+  };
+
+  // Filter positions by BU and Department
+  const buDeptFilteredPositions = useMemo(() => {
+    return mockPositions.filter(pos => {
+      const buMatch = !selectedBU || pos.businessUnit === selectedBU;
+      const deptMatch = !selectedDept || pos.department === selectedDept;
+      return buMatch && deptMatch;
+    });
+  }, [selectedBU, selectedDept]);
+
+  // Filter summary based on BU/Dept and selected teams and levels
   const filteredSummary = useMemo(() => {
-    return filterSummaryByTeamsAndLevels(mockPositions, selectedTeams, selectedLevels, summary);
-  }, [selectedTeams, selectedLevels, summary]);
+    return filterSummaryByTeamsAndLevels(buDeptFilteredPositions, selectedTeams, selectedLevels, summary);
+  }, [buDeptFilteredPositions, selectedTeams, selectedLevels, summary]);
 
   const pipelineData = useMemo(() => getPipelineData(filteredSummary), [filteredSummary]);
   const rejectReasonsData = useMemo(() => getRejectReasonsData(filteredSummary), [filteredSummary]);
@@ -174,12 +196,51 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
           </div>
 
           {/* Title section */}
-          <div className="mb-4">
+          <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">Hiring Analytics</h1>
             <p className="text-gray-600 mt-2">
               {dateRangeStr}
-              {query?.team && <span> • Team: {query.team}</span>}
+              {selectedBU && <span> • Business Unit: {BUSINESS_UNITS.find(bu => bu.code === selectedBU)?.label}</span>}
+              {selectedDept && <span> • Department: {selectedDept}</span>}
             </p>
+          </div>
+
+          {/* BU & Department Filters */}
+          <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col sm:flex-row gap-4">
+            {/* Business Unit Filter */}
+            <div className="flex-1">
+              <label className="block text-xs font-semibold text-gray-600 mb-2">BUSINESS UNIT</label>
+              <select
+                value={selectedBU}
+                onChange={(e) => handleBUChange(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+              >
+                <option value="">All</option>
+                {BUSINESS_UNITS.map((bu) => (
+                  <option key={bu.code} value={bu.code}>
+                    {bu.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Department Filter */}
+            <div className="flex-1">
+              <label className="block text-xs font-semibold text-gray-600 mb-2">DEPARTMENT</label>
+              <select
+                value={selectedDept}
+                onChange={(e) => setSelectedDept(e.target.value)}
+                disabled={availableDepts.length === 0}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm disabled:bg-gray-100"
+              >
+                <option value="">All</option>
+                {availableDepts.map((dept) => (
+                  <option key={dept} value={dept}>
+                    {dept}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
         </div>
@@ -188,7 +249,8 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
       {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="space-y-8">
-          {/* Filters */}
+          {/* Filters - TODO: Update to use new FilterBar interface */}
+          {/*
           <FilterBar
             selectedTeams={selectedTeams}
             selectedLevels={selectedLevels}
@@ -197,6 +259,7 @@ export const HistoricalAnalyticsPage = React.memo(function HistoricalAnalyticsPa
             onLevelsChange={setSelectedLevels}
             onPrioritiesChange={setSelectedPriorities}
           />
+          */}
 
           {/* Summary Metrics - 5 Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import type { Position } from '../types';
 import { PositionRow } from './PositionRow';
 import clsx from 'clsx';
@@ -13,9 +13,9 @@ export function PositionAccordion({ positions }: PositionAccordionProps) {
   const [expandedTeam, setExpandedTeam] = useState<string>('PEN');
 
   // Group positions by team
-  const positionsByTeam = TEAMS_ORDER.reduce(
+  const positionsBydept = TEAMS_ORDER.reduce(
     (acc, team) => {
-      acc[team] = positions.filter((p) => p.team === team);
+      acc[dept] = positions.filter((p) => p.department === team);
       return acc;
     },
     {} as Record<string, Position[]>
@@ -25,7 +25,7 @@ export function PositionAccordion({ positions }: PositionAccordionProps) {
     <div className="space-y-2">
       {TEAMS_ORDER.map((team) => {
         const teamPositions = positionsByTeam[team];
-        const isExpanded = expandedTeam === team;
+        const isExpanded = expandeddept === team;
         const positionCount = teamPositions.length;
 
         return (
@@ -39,7 +39,7 @@ export function PositionAccordion({ positions }: PositionAccordionProps) {
               )}
             >
               <span>
-                {isExpanded ? '▼' : '▶'} {team} — {positionCount} position{positionCount !== 1 ? 's' : ''}
+                {isExpanded ? 'â–¼' : 'â–¶'} {team} â€” {positionCount} position{positionCount !== 1 ? 's' : ''}
               </span>
               <span className="text-gray-500 text-sm">{positionCount} open</span>
             </button>
@@ -69,3 +69,5 @@ export function PositionAccordion({ positions }: PositionAccordionProps) {
     </div>
   );
 }
+
+

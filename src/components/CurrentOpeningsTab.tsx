@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react';
 import type { Position } from '../types';
 import { FilterBar } from './FilterBar';
 import { SummaryCards } from './SummaryCards';
-import { PositionAccordion } from './PositionAccordion';
+import { BusinessUnitAccordion } from './BusinessUnitAccordion';
 import { useSummaryMetrics } from '../hooks/useSummaryMetrics';
+import { BUSINESS_UNITS } from '../constants/businessUnits';
 
 interface CurrentOpeningsTabProps {
   positions: Position[];
@@ -12,33 +13,60 @@ interface CurrentOpeningsTabProps {
 export function CurrentOpeningsTab({
   positions,
 }: CurrentOpeningsTabProps) {
-  const [selectedTeams, setSelectedTeams] = useState<Set<string>>(new Set(['PEN', 'GDS', 'GIO', 'PRO', 'PIN']));
+  const [selectedBU, setSelectedBU] = useState<string | null>(null);
+  const [selectedDept, setSelectedDept] = useState<string | null>(null);
   const [selectedLevels, setSelectedLevels] = useState<Set<string>>(new Set(['1.1', '1.2', '1.3', '2.1', '2.2', '2.3']));
   const [selectedPriorities, setSelectedPriorities] = useState<Set<string>>(new Set(['P1', 'P2', 'P3']));
+  const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
 
-  // Filter positions using AND logic for all three filters
+  // Get available departments for selected BU
+  const selectedBUData = BUSINESS_UNITS.find((bu) => bu.code === selectedBU);
+  const availableDepts = selectedBUData?.departments || [];
+
+  // Filter positions using AND logic
   const filteredPositions = useMemo(() => {
     return positions.filter((p) => {
-      const teamMatch = selectedTeams.size === 0 || selectedTeams.has(p.team);
+      const buMatch = !selectedBU || p.businessUnit === selectedBU;
+      const deptMatch = !selectedDept || p.department === selectedDept;
       const levelMatch = selectedLevels.size === 0 || selectedLevels.has(p.level);
       const priorityMatch = selectedPriorities.size === 0 || selectedPriorities.has(p.priority);
-      return teamMatch && levelMatch && priorityMatch;
+      return buMatch && deptMatch && levelMatch && priorityMatch;
     });
-  }, [positions, selectedTeams, selectedLevels, selectedPriorities]);
+  }, [positions, selectedBU, selectedDept, selectedLevels, selectedPriorities]);
 
   // Calculate metrics for filtered positions
   const metrics = useSummaryMetrics(filteredPositions);
+
+  const handleBUChange = (buCode: string | null) => {
+    setSelectedBU(buCode);
+    setSelectedDept(null); // reset department filter
+  };
+
+  const handleDeptToggle = (dept: string) => {
+    setExpandedDepts((prev) => {
+      const next = new Set(prev);
+      if (next.has(dept)) {
+        next.delete(dept);
+      } else {
+        next.add(dept);
+      }
+      return next;
+    });
+  };
 
   return (
     <div className="space-y-8">
       {/* Filter Bar */}
       <FilterBar
-        selectedTeams={selectedTeams}
+        selectedBU={selectedBU}
+        selectedDept={selectedDept}
         selectedLevels={selectedLevels}
         selectedPriorities={selectedPriorities}
-        onTeamsChange={setSelectedTeams}
+        onBUChange={handleBUChange}
+        onDeptChange={setSelectedDept}
         onLevelsChange={setSelectedLevels}
         onPrioritiesChange={setSelectedPriorities}
+        availableDepts={availableDepts}
       />
 
       {/* Summary Cards */}
@@ -47,12 +75,38 @@ export function CurrentOpeningsTab({
       {/* Positions Section Title */}
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-4">
-          Positions by Team ({filteredPositions.length} positions)
+          Positions by Business Unit ({filteredPositions.length} positions)
         </h3>
 
-        {/* Position Accordion */}
+        {/* Business Units */}
         {filteredPositions.length > 0 ? (
-          <PositionAccordion positions={filteredPositions} />
+          <div className="space-y-3">
+            {BUSINESS_UNITS.map((bu) => {
+              const buPositions = filteredPositions.filter(
+                (p) => p.businessUnit === bu.code
+              );
+
+              // Skip BU if no positions (after filtering)
+              if (buPositions.length === 0 && selectedBU !== bu.code) {
+                return null;
+              }
+
+              return (
+                <BusinessUnitAccordion
+                  key={bu.code}
+                  buLabel={bu.label}
+                  departments={bu.departments}
+                  positions={buPositions}
+                  isOpen={selectedBU === bu.code || !selectedBU}
+                  onToggle={() =>
+                    handleBUChange(selectedBU === bu.code ? null : bu.code)
+                  }
+                  expandedDepts={expandedDepts}
+                  onDeptToggle={handleDeptToggle}
+                />
+              );
+            })}
+          </div>
         ) : (
           <div className="bg-white rounded-lg shadow p-8 text-center">
             <p className="text-gray-500">No positions found with selected filters</p>

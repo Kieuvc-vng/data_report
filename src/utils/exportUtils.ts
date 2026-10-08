@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Export Utilities
  * Provides functions for exporting data to CSV and PDF formats
  */
@@ -86,8 +86,8 @@ export const generateHiringSummaryCSV = (data: HiringSummary): string => {
   rows.push(['Hiring Analytics Report']);
   rows.push([]);
   rows.push(['Date Range', `${formatDate(data.dateRange.start)} - ${formatDate(data.dateRange.end)}`]);
-  if (data.team) {
-    rows.push(['Team', data.team]);
+  if (data.department) {
+    rows.push(['Department', data.department]);
   }
   rows.push([]);
 
@@ -310,7 +310,7 @@ export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
         <header>
           <h1>Hiring Analytics Report</h1>
           <div class="date-range">${escapeHtml(dateRangeStr)}</div>
-          ${summary.team ? `<div class="team-info">Team: ${escapeHtml(summary.team)}</div>` : ''}
+          ${summary.department ? `<div class="team-info">Department: ${escapeHtml(summary.department)}</div>` : ''}
         </header>
 
         <section>
@@ -405,13 +405,13 @@ export const generateHiringSummaryPDF = (summary: HiringSummary): string => {
 export const exportPositionsToCSV = (positions: Position[], filename: string = 'positions.csv'): void => {
   try {
     const rows: string[][] = [
-      ['ID', 'Team', 'Title', 'Level', 'Salary Range', 'HC', 'Priority', 'Status', 'CVs', '1st Interview', '2nd Interview', 'Offers', 'Created Date', 'Est. Fill Days'],
+      ['ID', 'Department', 'Title', 'Level', 'Salary Range', 'HC', 'Priority', 'Status', 'CVs', '1st Interview', '2nd Interview', 'Offers', 'Created Date', 'Est. Fill Days'],
     ];
 
     positions.forEach(pos => {
       rows.push([
         pos.id,
-        pos.team,
+        pos.department,
         pos.title,
         pos.level,
         pos.salary,
@@ -462,3 +462,5 @@ export const generateFilename = (prefix: string = 'hiring-report', extension: st
   const timestamp = new Date().toISOString().split('T')[0];
   return `${prefix}-${timestamp}.${extension}`;
 };
+
+
