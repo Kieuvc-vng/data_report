@@ -19,8 +19,6 @@ export {
 export {
   transformPipelineData,
   transformRejectReasonsData,
-  transformLevelDistributionData,
-  transformByTeamData,
   calculateMetrics,
   filterByDateRange,
   validateDateString,

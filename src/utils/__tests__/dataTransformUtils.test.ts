@@ -7,8 +7,6 @@ import type { HiringSummary, Position } from '../../types';
 import {
   transformPipelineData,
   transformRejectReasonsData,
-  transformLevelDistributionData,
-  transformByTeamData,
   calculateMetrics,
   filterByDateRange,
   validateDateString,
@@ -24,16 +22,37 @@ describe('Data Transformation Utilities', () => {
     salaryRange: '$45K-$120K',
     hcTotal: 32,
     pipeline: { cv: 100, firstInterview: 50, secondInterview: 25, offers: 10 },
-    rejectReasons: { notFitSkills: 30, lowExp: 10, salaryMismatch: 5, other: 5 },
-    levelDistribution: { '1.1': 8, '1.2': 12, '1.3': 10, '2.1': 6, '2.2': 2 },
-    byTeam: { PEN: 5, GDS: 3, GIO: 2, PRO: 1, PIN: 1 },
-    aiInsight: 'Test insight',
+    timeToFill: 17,
+    offerAcceptanceRate: 60,
+    offersCount: 10,
+    onboardedCount: 12,
+    rejectReasons: {
+      byStage: {
+        cv: { skillsMismatch: 20, insufficientExp: 10, overqualified: 3, language: 2 },
+        firstInterview: { skillsMismatch: 10, compensationMismatch: 7, location: 3, other: 2 },
+        secondInterview: { compensationMismatch: 5, background: 2, positionClosed: 3, notProgressedInTime: 4 },
+      },
+      allReasons: {
+        skillsMismatch: 35,
+        insufficientExp: 15,
+        overqualified: 8,
+        compensationMismatch: 12,
+        location: 5,
+        language: 3,
+        background: 2,
+        positionClosed: 3,
+        notProgressedInTime: 4,
+        other: 8,
+      },
+      candidateWithdrawn: 25,
+    },
   };
 
   const mockPositions: Position[] = [
     {
       id: 'pos_1',
-      team: 'PEN',
+      department: 'PEN',
+      businessUnit: 'game_publishing_platform',
       title: 'Engineer',
       level: '1.2',
       salary: '$50K-$75K',
@@ -41,13 +60,18 @@ describe('Data Transformation Utilities', () => {
       priority: 'P1',
       status: 'open',
       pipeline: { cv: 20, firstInterview: 8, secondInterview: 2, offers: 1 },
-      rejectReasons: { notFitSkills: 8, lowExp: 2, salaryMismatch: 1, other: 1 },
+      rejectReasons: {
+        byStage: { cv: { skillsMismatch: 8, insufficientExp: 2 }, firstInterview: { skillsMismatch: 3, compensationMismatch: 1 } },
+        candidateWithdrawn: 1,
+      },
       createdDate: '2026-08-15',
       estimatedFillDays: 20,
+      onboardedCount: 1,
     },
     {
       id: 'pos_2',
-      team: 'GDS',
+      department: 'GDS',
+      businessUnit: 'game_publishing_platform',
       title: 'Data Analyst',
       level: '1.3',
       salary: '$60K-$90K',
@@ -55,9 +79,13 @@ describe('Data Transformation Utilities', () => {
       priority: 'P2',
       status: 'open',
       pipeline: { cv: 15, firstInterview: 5, secondInterview: 2, offers: 0 },
-      rejectReasons: { notFitSkills: 5, lowExp: 3, salaryMismatch: 2, other: 0 },
+      rejectReasons: {
+        byStage: { cv: { skillsMismatch: 5, insufficientExp: 3 }, firstInterview: { skillsMismatch: 2 } },
+        candidateWithdrawn: 0,
+      },
       createdDate: '2026-08-20',
       estimatedFillDays: 18,
+      onboardedCount: 0,
     },
   ];
 
@@ -87,8 +115,8 @@ describe('Data Transformation Utilities', () => {
     it('should transform reject reasons with labels', () => {
       const result = transformRejectReasonsData(mockSummary);
 
-      expect(result.some(r => r.name === 'Not Fit Skills')).toBe(true);
-      expect(result.some(r => r.name === 'Low Experience')).toBe(true);
+      expect(result.some(r => r.name === 'Skills Mismatch')).toBe(true);
+      expect(result.some(r => r.name === 'Insufficient Experience')).toBe(true);
     });
 
     it('should calculate percentages for reject reasons', () => {
@@ -102,37 +130,9 @@ describe('Data Transformation Utilities', () => {
     });
   });
 
-  // transformLevelDistributionData tests
-  describe('transformLevelDistributionData', () => {
-    it('should sort levels numerically', () => {
-      const result = transformLevelDistributionData(mockSummary);
-
-      for (let i = 1; i < result.length; i++) {
-        const prevLevel = parseFloat(result[i - 1].label || '0');
-        const currLevel = parseFloat(result[i].label || '0');
-        expect(prevLevel).toBeLessThanOrEqual(currLevel);
-      }
-    });
-
-    it('should include percentage data', () => {
-      const result = transformLevelDistributionData(mockSummary);
-
-      result.forEach(level => {
-        expect(level.percentage).toBeGreaterThan(0);
-      });
-    });
-  });
-
-  // transformByTeamData tests
-  describe('transformByTeamData', () => {
-    it('should sort teams by value descending', () => {
-      const result = transformByTeamData(mockSummary);
-
-      for (let i = 1; i < result.length; i++) {
-        expect(result[i - 1].value).toBeGreaterThanOrEqual(result[i].value);
-      }
-    });
-  });
+  // Note: transformLevelDistributionData and transformByTeamData tests disabled
+  // These functions are currently commented out as the corresponding properties
+  // (levelDistribution and byTeam) are not available in the HiringSummary type
 
   // calculateMetrics tests
   describe('calculateMetrics', () => {
@@ -231,7 +231,7 @@ describe('Data Transformation Utilities', () => {
   // groupBy tests
   describe('groupBy', () => {
     it('should group items by key', () => {
-      const result = groupBy(mockPositions, pos => pos.team);
+      const result = groupBy(mockPositions, pos => pos.department);
 
       expect(result['PEN']).toHaveLength(1);
       expect(result['GDS']).toHaveLength(1);
@@ -241,7 +241,7 @@ describe('Data Transformation Utilities', () => {
   // aggregateByKey tests
   describe('aggregateByKey', () => {
     it('should aggregate values by key', () => {
-      const result = aggregateByKey(mockPositions, pos => pos.team, pos => pos.hc);
+      const result = aggregateByKey(mockPositions, pos => pos.department, pos => pos.hc);
 
       expect(result['PEN']).toBe(2);
       expect(result['GDS']).toBe(1);

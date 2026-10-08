@@ -48,13 +48,21 @@ export const transformPipelineData = (summary: HiringSummary): ChartDataPoint[] 
  */
 export const transformRejectReasonsData = (summary: HiringSummary): ChartDataPoint[] => {
   const reasonLabels: Record<string, string> = {
-    notFitSkills: 'Not Fit Skills',
-    lowExp: 'Low Experience',
-    salaryMismatch: 'Salary Mismatch',
+    skillsMismatch: 'Skills Mismatch',
+    insufficientExp: 'Insufficient Experience',
+    overqualified: 'Overqualified',
+    compensationMismatch: 'Compensation Mismatch',
+    location: 'Location',
+    language: 'Language',
+    background: 'Background',
+    positionClosed: 'Position Closed',
+    notProgressedInTime: 'Not Progressed in Time',
     other: 'Other',
   };
 
-  const data = Object.entries(summary.rejectReasons).map(([key, value]) => ({
+  // Use allReasons from the nested structure
+  const allReasons = summary.rejectReasons.allReasons || {};
+  const data = Object.entries(allReasons).map(([key, value]) => ({
     name: reasonLabels[key] || key,
     value,
   }));
@@ -69,51 +77,55 @@ export const transformRejectReasonsData = (summary: HiringSummary): ChartDataPoi
 
 /**
  * Transforms level distribution to Bar chart format
+ * Note: Currently disabled - levelDistribution property not available in HiringSummary
+ * This function is kept as a reference for future implementation
  * @param summary - HiringSummary object
  * @returns Array of chart data points sorted by level
  */
-export const transformLevelDistributionData = (summary: HiringSummary): ChartDataPoint[] => {
-  const data = Object.entries(summary.levelDistribution)
-    .map(([level, count]) => ({
-      name: `Level ${level}`,
-      value: count,
-      label: level,
-    }))
-    .sort((a, b) => {
-      // Sort levels numerically
-      const aNum = parseFloat(a.label || '0');
-      const bNum = parseFloat(b.label || '0');
-      return aNum - bNum;
-    });
-
-  // Calculate percentages
-  const total = data.reduce((sum, point) => sum + point.value, 0) || 1;
-  return data.map(point => ({
-    ...point,
-    percentage: Math.round((point.value / total) * 100),
-  }));
-};
+// export const transformLevelDistributionData = (summary: HiringSummary): ChartDataPoint[] => {
+//   const data = Object.entries(summary.levelDistribution)
+//     .map(([level, count]) => ({
+//       name: `Level ${level}`,
+//       value: count,
+//       label: level,
+//     }))
+//     .sort((a, b) => {
+//       // Sort levels numerically
+//       const aNum = parseFloat(a.label || '0');
+//       const bNum = parseFloat(b.label || '0');
+//       return aNum - bNum;
+//     });
+//
+//   // Calculate percentages
+//   const total = data.reduce((sum, point) => sum + point.value, 0) || 1;
+//   return data.map(point => ({
+//     ...point,
+//     percentage: Math.round((point.value / total) * 100),
+//   }));
+// };
 
 /**
  * Transforms by-team data to Bar chart format
+ * Note: Currently disabled - byTeam property not available in HiringSummary
+ * This function is kept as a reference for future implementation
  * @param summary - HiringSummary object
  * @returns Array of chart data points sorted by value descending
  */
-export const transformByTeamData = (summary: HiringSummary): ChartDataPoint[] => {
-  const data = Object.entries(summary.byTeam)
-    .map(([team, count]) => ({
-      name: team,
-      value: count,
-    }))
-    .sort((a, b) => b.value - a.value);
-
-  // Calculate percentages
-  const total = data.reduce((sum, point) => sum + point.value, 0) || 1;
-  return data.map(point => ({
-    ...point,
-    percentage: Math.round((point.value / total) * 100),
-  }));
-};
+// export const transformByTeamData = (summary: HiringSummary): ChartDataPoint[] => {
+//   const data = Object.entries(summary.byTeam)
+//     .map(([team, count]) => ({
+//       name: team,
+//       value: count,
+//     }))
+//     .sort((a, b) => b.value - a.value);
+//
+//   // Calculate percentages
+//   const total = data.reduce((sum, point) => sum + point.value, 0) || 1;
+//   return data.map(point => ({
+//     ...point,
+//     percentage: Math.round((point.value / total) * 100),
+//   }));
+// };
 
 /**
  * Calculates summary metrics from a list of positions
