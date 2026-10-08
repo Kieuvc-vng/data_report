@@ -1,9 +1,11 @@
 export { Badge } from './Badge';
 export { BusinessUnitAccordion } from './BusinessUnitAccordion';
 export { Card } from './Card';
+export { CurrentOpeningsTab } from './CurrentOpeningsTab';
 export { DepartmentAccordion } from './DepartmentAccordion';
 export { DonutChart } from './DonutChart';
 export { ExpandCollapseControls } from './ExpandCollapseControls';
+export { HistoricalAnalyticsPage } from './HistoricalAnalyticsPage';
 export { PipelineFlowChart } from './PipelineFlowChart';
 export { PipelineVisualizationTabs } from './PipelineVisualizationTabs';
 export { PositionAccordion } from './PositionAccordion';
