@@ -51,37 +51,33 @@ export const CurrentOpeningsTab: React.FC = () => {
   )
 
   if (positionsError) {
-    const { title, message, action } = handleError(positionsError)
+    const { title, message } = handleError(positionsError)
     return (
       <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
         <h3 className="font-semibold text-red-900 dark:text-red-100">{title}</h3>
         <p className="text-sm text-red-700 dark:text-red-200">{message}</p>
-        {action && (
-          <button
-            onClick={action}
-            className="mt-2 px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded text-sm hover:bg-red-700 dark:hover:bg-red-600"
-          >
-            Retry
-          </button>
-        )}
+        <button
+          onClick={() => refetchPositions()}
+          className="mt-2 px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded text-sm hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     )
   }
 
   if (metricsError) {
-    const { title, message, action } = handleError(metricsError)
+    const { title, message } = handleError(metricsError)
     return (
       <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
         <h3 className="font-semibold text-red-900 dark:text-red-100">{title}</h3>
         <p className="text-sm text-red-700 dark:text-red-200">{message}</p>
-        {action && (
-          <button
-            onClick={action}
-            className="mt-2 px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded text-sm hover:bg-red-700 dark:hover:bg-red-600"
-          >
-            Retry
-          </button>
-        )}
+        <button
+          onClick={() => refetchMetrics()}
+          className="mt-2 px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded text-sm hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     )
   }
