@@ -67,7 +67,7 @@ export async function getHiringMetrics(
  * @param params Query parameters for filtering historical data
  * @returns Historical data for analytics
  */
-export async function getHistoricalData(params: any): Promise<any> {
+export async function getHistoricalData(params: Record<string, string | number>): Promise<any> {
   try {
     const queryParams = new URLSearchParams()
     Object.entries(params).forEach(([key, value]) => {
@@ -76,7 +76,7 @@ export async function getHistoricalData(params: any): Promise<any> {
 
     const endpoint = `${ENDPOINTS.historicalMetrics}${queryParams.toString() ? '?' + queryParams.toString() : ''}`
 
-    return await httpClient.request(endpoint)
+    return await httpClient.request<any>(endpoint)
   } catch (error) {
     console.error('Failed to fetch historical data:', error)
     throw error
