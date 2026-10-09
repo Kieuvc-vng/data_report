@@ -67,7 +67,7 @@ export class HttpClient {
       clearTimeout(timeoutId)
 
       if (!response.ok) {
-        const data = await response.json().catch(() => ({}))
+        const data = await response.json().catch(() => ({} as Record<string, unknown>))
         throw new ApiError(response.status, response.statusText, data)
       }
 
@@ -79,7 +79,7 @@ export class HttpClient {
 
       if (error instanceof DOMException && error.name === 'AbortError') {
         if (retriesLeft > 0) {
-          await new Promise(r => setTimeout(r, options.retries ?? 1000))
+          await new Promise(r => setTimeout(r, this.config.retryDelay))
           return this.requestWithRetry(url, options, retriesLeft - 1, timeout)
         }
         throw new TimeoutError()
