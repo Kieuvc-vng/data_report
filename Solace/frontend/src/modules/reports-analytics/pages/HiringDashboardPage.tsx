@@ -39,8 +39,12 @@ export const HiringDashboardPage: React.FC = () => {
 
         {/* Tab Content */}
         <div>
-          {activeTab === 'current' && <CurrentOpeningsTab />}
-          {activeTab === 'historical' && <HistoricalAnalyticsPage />}
+          <div style={{ display: activeTab === 'current' ? 'block' : 'none' }}>
+            <CurrentOpeningsTab />
+          </div>
+          <div style={{ display: activeTab === 'historical' ? 'block' : 'none' }}>
+            <HistoricalAnalyticsPage />
+          </div>
         </div>
       </div>
     </ErrorBoundary>
