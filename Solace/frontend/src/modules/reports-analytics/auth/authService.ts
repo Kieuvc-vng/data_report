@@ -1,14 +1,19 @@
 import type { AuthToken, AuthUser } from './types'
 
 export class AuthService {
-  private clientId = import.meta.env.VITE_ENTRA_CLIENT_ID || 'your-client-id'
-  private tenantId = import.meta.env.VITE_ENTRA_TENANT_ID || 'your-tenant-id'
+  private clientId = import.meta.env.VITE_ENTRA_CLIENT_ID || ''
+  private tenantId = import.meta.env.VITE_ENTRA_TENANT_ID || ''
   private redirectUri = `${window.location.origin}/auth/callback`
 
   private accessToken: string | null = null
   private refreshToken: string | null = null
 
   constructor() {
+    if (!this.clientId || !this.tenantId) {
+      if (import.meta.env.VITE_MULTIUSER !== 'false') {
+        throw new Error('Missing required environment variables: VITE_ENTRA_CLIENT_ID and VITE_ENTRA_TENANT_ID')
+      }
+    }
     this.loadFromStorage()
   }
 
