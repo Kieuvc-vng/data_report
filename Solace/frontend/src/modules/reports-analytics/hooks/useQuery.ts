@@ -53,7 +53,13 @@ export function useQuery<T>(
         setIsLoading(false)
         return
       } catch (err) {
-        const apiError = err as ApiErrorType
+        // Proper type checking for error
+        let apiError: ApiErrorType
+        if (err instanceof Error) {
+          apiError = err as ApiErrorType
+        } else {
+          apiError = new Error(String(err)) as unknown as ApiErrorType
+        }
 
         if (retries > 0 && (apiError instanceof TimeoutError || apiError instanceof NetworkError)) {
           retries--
@@ -67,7 +73,7 @@ export function useQuery<T>(
         throw err
       }
     }
-  }, [queryFn, cacheKey, options])
+  }, [queryFn, cacheKey, options?.retry, options?.onError, options?.onSuccess, options?.enabled])
 
   useEffect(() => {
     if (options.enabled !== false) {
