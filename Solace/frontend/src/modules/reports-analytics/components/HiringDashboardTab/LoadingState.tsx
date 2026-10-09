@@ -1,6 +1,6 @@
-import type { FC } from 'react'
+import React from 'react'
 
-export const AccordionSkeleton: FC = () => (
+export const AccordionSkeleton: React.FC = () => (
   <div className="space-y-4">
     {[1, 2, 3].map((i) => (
       <div
@@ -11,7 +11,7 @@ export const AccordionSkeleton: FC = () => (
   </div>
 )
 
-export const MetricsSkeleton: FC = () => (
+export const MetricsSkeleton: React.FC = () => (
   <div className="grid grid-cols-4 gap-4">
     {[1, 2, 3, 4].map((i) => (
       <div
@@ -22,6 +22,6 @@ export const MetricsSkeleton: FC = () => (
   </div>
 )
 
-export const ChartSkeleton: FC = () => (
+export const ChartSkeleton: React.FC = () => (
   <div className="bg-gray-200 h-64 rounded animate-pulse" />
 )
