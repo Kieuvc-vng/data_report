@@ -33,10 +33,10 @@ export class AuthService {
         },
       )
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
       const data = await response.json()
-      console.log('Device Code:', data.device_code)
-      console.log('User Code:', data.user_code)
-      console.log('Verification URI:', data.verification_uri)
 
       // Poll for token
       this.pollForToken(data.device_code)
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   private async pollForToken(deviceCode: string): Promise<void> {
-    const maxAttempts = 120 // 2 minutes
+    const maxAttempts = 120 // 10 minutes (120 attempts × 5 second intervals)
     let attempts = 0
 
     while (attempts < maxAttempts) {
@@ -67,6 +67,9 @@ export class AuthService {
           },
         )
 
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
         const data = await response.json()
 
         if (data.access_token) {
@@ -106,6 +109,9 @@ export class AuthService {
         },
       })
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
       const userData = await response.json()
 
       return {
