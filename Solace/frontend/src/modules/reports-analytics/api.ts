@@ -83,10 +83,14 @@ export async function getHiringMetrics(
  * @param params Query parameters for filtering historical data
  * @returns Historical data for analytics
  */
-export async function getHistoricalData(params: Record<string, string | number>): Promise<any> {
-  const cacheKey = `historical:${JSON.stringify(params)}`
+export async function getHistoricalData(
+  params: Record<string, string | number>,
+): Promise<Record<string, unknown>> {
+  const cacheKey = `historical:${Object.entries(params)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(':')}`
 
-  const cached = queryCache.get<any>(cacheKey)
+  const cached = queryCache.get<Record<string, unknown>>(cacheKey)
   if (cached) return cached
 
   try {
@@ -97,7 +101,7 @@ export async function getHistoricalData(params: Record<string, string | number>)
 
     const endpoint = `${ENDPOINTS.historicalMetrics}${queryParams.toString() ? '?' + queryParams.toString() : ''}`
 
-    const data = await httpClient.request<any>(endpoint)
+    const data = await httpClient.request<Record<string, unknown>>(endpoint)
     queryCache.set(cacheKey, data)
     return data
   } catch (error) {
