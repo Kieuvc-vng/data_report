@@ -23,7 +23,7 @@ export async function getHiringPositions(
   try {
     const endpoint = filters?.businessUnit
       ? ENDPOINTS.positions(filters.businessUnit, filters.department || '')
-      : ENDPOINTS.activeSla
+      : ENDPOINTS.activeSla // List all active positions when no filter provided
 
     const response = await httpClient.request<{ data: Position[] }>(endpoint)
     return response.data || []
