@@ -18,7 +18,7 @@ export interface CacheOptions {
  * QueryCache manages caching of API responses with TTL and invalidation support
  */
 export class QueryCache {
-  private cache = new Map<string, CacheEntry<any>>()
+  private cache = new Map<string, CacheEntry<unknown>>()
   private defaultTtl = 5 * 60 * 1000 // 5 minutes
 
   /**
