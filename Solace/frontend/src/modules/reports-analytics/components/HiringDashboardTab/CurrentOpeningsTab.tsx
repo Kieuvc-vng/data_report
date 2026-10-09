@@ -11,6 +11,7 @@ import { PositionAccordion } from './PositionAccordion'
 
 export const CurrentOpeningsTab: React.FC = () => {
   const [businessUnit, setBusinessUnit] = useState('')
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const { handleError } = useErrorHandler()
 
   // Fetch business units for dropdown
@@ -68,11 +69,19 @@ export const CurrentOpeningsTab: React.FC = () => {
   }
 
   if (metricsError) {
-    const { title, message } = handleError(metricsError)
+    const { title, message, action } = handleError(metricsError)
     return (
       <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
         <h3 className="font-semibold text-red-900 dark:text-red-100">{title}</h3>
         <p className="text-sm text-red-700 dark:text-red-200">{message}</p>
+        {action && (
+          <button
+            onClick={action}
+            className="mt-2 px-3 py-1 bg-red-600 dark:bg-red-700 text-white rounded text-sm hover:bg-red-700 dark:hover:bg-red-600"
+          >
+            Retry
+          </button>
+        )}
       </div>
     )
   }
@@ -153,12 +162,19 @@ export const CurrentOpeningsTab: React.FC = () => {
       {/* Refresh Button */}
       <button
         onClick={async () => {
-          await refetchPositions()
-          await refetchMetrics()
+          setIsRefreshing(true)
+          try {
+            await Promise.all([refetchPositions(), refetchMetrics()])
+          } catch (err) {
+            console.error('Error during refresh:', err)
+          } finally {
+            setIsRefreshing(false)
+          }
         }}
-        className="mt-6 px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+        disabled={isRefreshing}
+        className="mt-6 px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        Refresh Data
+        {isRefreshing ? 'Refreshing...' : 'Refresh Data'}
       </button>
     </div>
   )
