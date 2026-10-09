@@ -76,15 +76,23 @@ export const useAuthStore = create<AuthState>((set) => ({
 }))
 
 export function useAuth(): AuthContext {
-  return useAuthStore((state) => ({
-    user: state.user,
-    isAuthenticated: state.isAuthenticated,
-    isLoading: state.isLoading,
-    error: state.error,
-    login: state.login,
-    logout: state.logout,
-    refreshToken: state.refreshToken,
-  }))
+  const user = useAuthStore((state) => state.user)
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const isLoading = useAuthStore((state) => state.isLoading)
+  const error = useAuthStore((state) => state.error)
+  const login = useAuthStore((state) => state.login)
+  const logout = useAuthStore((state) => state.logout)
+  const refreshToken = useAuthStore((state) => state.refreshToken)
+
+  return {
+    user,
+    isAuthenticated,
+    isLoading,
+    error,
+    login,
+    logout,
+    refreshToken,
+  }
 }
 
 // Hook to get access token

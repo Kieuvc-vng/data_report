@@ -127,7 +127,7 @@ export class AuthService {
     }
   }
 
-  private extractRoles(userData: any): string[] {
+  private extractRoles(userData: Record<string, unknown>): string[] {
     // Map Entra ID roles/groups to app roles
     const roles: string[] = []
 
